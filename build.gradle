@@ -1,9 +1,28 @@
+buildscript {
+  repositories {
+    jcenter()
+    maven { url 'https://dl.bintray.com/jspcore/maven' }
+  }
+
+  dependencies {
+  }
+}
+
+plugins {
+  id "com.jfrog.bintray" version "1.7.3"
+}
+
 group 'com.jspcore'
 version '0.1-SNAPSHOT'
+description = 'Library for capturing log messages for test assertions.'
 
+apply plugin: 'idea'
 apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
   mavenCentral()
@@ -25,18 +44,87 @@ jacocoTestReport {
     html.enabled true
   }
 }
-//task codeCoverageReport(type: JacocoReport) {
-//  def projects = subprojects.findAll { it.plugins.hasPlugin(JacocoPlugin) && it.file("src/test").exists() }
-//
-//  dependsOn projects*.test
-//
-//  sourceDirectories = files(projects*.sourceSets*.main*.allSource)
-//  classDirectories = files(projects*.sourceSets*.main*.output)
-//  executionData = files(projects*.jacocoTestReport*.executionData)
-//
-//  reports {
-//    html.enabled = true
-//    xml.enabled = true
-//    csv.enabled = false
-//  }
-//}
+
+def pomConfig = {
+  name project.name
+  description project.description
+  url "http://www.jspcore.com/"
+
+  licenses {
+    license {
+      name "MIT License"
+      url "https://opensource.org/licenses/MIT"
+      distribution "repo"
+    }
+  }
+  scm {
+    connection "scm:https://mustaine@github.com/mustaine/logcapture.git"
+    developerConnection "scm:git@github.com:mustaine/logcapture.git"
+    url "https://github.com/mustaine/logcapture"
+  }
+  developers {
+    developer {
+      id "jspcore"
+      name "Team JSPCore"
+    }
+  }
+}
+
+task javadocJar(type: Jar) {
+  classifier = 'javadoc'
+  from javadoc
+}
+
+task sourceJar(type: Jar) {
+  from sourceSets.main.allJava
+}
+
+publishing {
+  publications {
+    MyPublication(MavenPublication) {
+      from components.java
+      groupId 'com.jspcore'
+      artifactId 'logcapture'
+      version '0.1'
+
+      artifacts {
+        artifact sourceJar {
+          classifier "sources"
+        }
+
+        artifact javadocJar {
+          classifier "javadoc"
+        }
+      }
+
+      pom.withXml {
+        def root = asNode()
+        asNode().appendNode('description', project.description)
+        root.children().last() + pomConfig
+      }
+    }
+  }
+}
+
+bintray {
+//  dryRun = true
+  user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+  key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+
+  publications = ['MyPublication']
+  pkg {
+    repo = 'maven'
+    name = 'logcapture'
+    userOrg = 'jspcore'
+    licenses = ['MIT']
+    vcsUrl = 'https://github.com/mustaine/logcapture.git'
+    version {
+      name = '0.1'
+      vcsTag = '0.1'
+      released = new Date()
+    }
+  }
+}
+
+
+
