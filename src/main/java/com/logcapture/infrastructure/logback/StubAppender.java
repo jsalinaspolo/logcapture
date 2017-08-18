@@ -1,4 +1,4 @@
-package com.sky.logcapture.infrastructure.logback;
+package com.logcapture.infrastructure.logback;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
@@ -12,11 +12,12 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class StubAppender implements Appender<ILoggingEvent> {
+  public static final String STUB_APPENDER_NAME = "stub-appender";
   private final List<ILoggingEvent> loggedEvents = new CopyOnWriteArrayList<>();
 
   @Override
   public String getName() {
-    throw new UnsupportedOperationException();
+    return STUB_APPENDER_NAME;
   }
 
   @Override
