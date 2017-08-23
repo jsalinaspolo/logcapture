@@ -23,7 +23,7 @@ public class ExpectedLoggingMessage {
   private ExpectedLoggingMessage() {
   }
 
-  public static ExpectedLoggingMessage logMessage() {
+  public static ExpectedLoggingMessage aMessage() {
     return new ExpectedLoggingMessage();
   }
 

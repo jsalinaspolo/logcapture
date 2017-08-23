@@ -4,16 +4,20 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.logcapture.assertion.ExpectedLoggingMessage;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-public class LogCapture {
+public class LogCapture<T> {
 
   private final List<ILoggingEvent> events;
+  private final T result;
 
-  private LogCapture(List<ILoggingEvent> events) {
+  public LogCapture(List<ILoggingEvent> events, T result) {
     this.events = events;
+    this.result = result;
   }
 
-  public LogCapture containMessage(ExpectedLoggingMessage expectedLoggingMessage) {
+  public LogCapture<T> logged(ExpectedLoggingMessage expectedLoggingMessage) {
     for (ILoggingEvent event : events) {
       if (expectedLoggingMessage.matches(event)) {
         return this;
@@ -23,7 +27,23 @@ public class LogCapture {
     throw new RuntimeException("No Log Found for [" + expectedLoggingMessage + "]");
   }
 
-  public static LogCapture captureLogEvents(Runnable codeBlock) {
-    return new LogCapture(CaptureLogs.captureLogEvents(codeBlock));
+  public LogCapture<T> assertions(Consumer<T> assertions) {
+    assertions.accept(result);
+    return this;
+  }
+
+  public static LogCapture<Void> captureLogEvents(Runnable codeBlock) {
+    return CaptureLogs.captureLogEvents(codeBlock);
+  }
+
+  public static <T> LogCapture<T> captureLogEvents(Supplier<T> codeBlock) {
+    return CaptureLogs.captureLogEvents(codeBlock);
+  }
+
+  public static Await<Void> captureLogEventsAsync(Runnable codeBlock) {
+    return (duration, condition) -> CaptureLogs.captureLogEventsAsync(codeBlock, duration, condition);
+  }
+  public static <T> Await<T> captureLogEventsAsync(Supplier<T> codeBlock) {
+    return (duration, condition) -> CaptureLogs.captureLogEventsAsync(codeBlock, duration, condition);
   }
 }
