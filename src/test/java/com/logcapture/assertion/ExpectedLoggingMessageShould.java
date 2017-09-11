@@ -3,14 +3,18 @@ package com.logcapture.assertion;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.LoggingEvent;
+import com.logcapture.matcher.exception.ExceptionCauseMatcher;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import static ch.qos.logback.classic.Level.ERROR;
 import static ch.qos.logback.classic.Level.INFO;
+import static com.logcapture.assertion.ExpectedLoggedException.logException;
 import static com.logcapture.assertion.ExpectedLoggingMessage.aMessage;
+import static com.logcapture.matcher.exception.ExceptionCauseMatcher.causeOf;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Fail.fail;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
@@ -74,7 +78,7 @@ public class ExpectedLoggingMessageShould {
   public void match_when_exception_class_match() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message", new RuntimeException());
     ExpectedLoggingMessage expectedLoggingMessage = aMessage()
-      .havingException(ExpectedLoggedException.logException()
+      .havingException(logException()
         .withException(instanceOf(RuntimeException.class)));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
@@ -157,14 +161,18 @@ public class ExpectedLoggingMessageShould {
       .withMessage(equalTo("message"))
       .length(equalTo(8))
       .withMdc("aKey", equalTo("some"))
-      .withLoggerName(equalTo("className"));
+      .withLoggerName(equalTo("className"))
+      .havingException(logException()
+        .withMessage(equalTo("exception thrown"))
+        .withException(causeOf(IllegalArgumentException.class)));
 
     assertThat(expectedLoggingMessage.toString())
       .contains("logLevelMatcher=<ERROR>")
       .contains("expectedMessageMatcher=\"message\"")
       .contains("expectedLengthMatcher=<8>")
       .contains("expectedMdc={aKey=\"some\"}")
-      .contains("expectedLoggerNameMatcher=\"className\"");
+      .contains("expectedLoggerNameMatcher=\"className\"")
+      .contains("expectedLoggedException=ExpectedLoggedException{expectedMessageMatcher=\"exception thrown\", expectedException=Expecting exception to be instance of class java.lang.IllegalArgumentException");
   }
 
   private LoggingEvent aLoggingEventWith(Level level, String message) {

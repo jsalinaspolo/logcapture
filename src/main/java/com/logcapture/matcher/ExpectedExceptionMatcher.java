@@ -23,5 +23,6 @@ public class ExpectedExceptionMatcher extends BaseMatcher<Exception> {
 
   @Override
   public void describeTo(Description description) {
+    expectedException.describeTo(description);
   }
 }

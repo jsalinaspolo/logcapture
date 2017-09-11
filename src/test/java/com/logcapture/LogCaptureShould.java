@@ -1,15 +1,20 @@
 package com.logcapture;
 
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.SocketTimeoutException;
 import java.util.concurrent.CompletableFuture;
 
 import static ch.qos.logback.classic.Level.INFO;
 import static com.logcapture.LogCapture.captureLogEvents;
 import static com.logcapture.LogCapture.captureLogEventsAsync;
+import static com.logcapture.assertion.ExpectedLoggedException.logException;
 import static com.logcapture.assertion.ExpectedLoggingMessage.aMessage;
+import static com.logcapture.matcher.exception.ExceptionCauseMatcher.causeOf;
+import static com.logcapture.matcher.exception.ExceptionCauseMessageMatcher.whereCauseMessage;
 import static java.time.Duration.ofSeconds;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -32,7 +37,7 @@ public class LogCaptureShould {
       .logged(aMessage()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a message")))
-    .assertions(result -> assertThat(result).isNull());
+      .assertions(result -> assertThat(result).isNull());
   }
 
   @Test
@@ -65,7 +70,7 @@ public class LogCaptureShould {
       .waitAtMost(ofSeconds(1), aMessage()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a message")))
-    .assertions(result -> assertThat(result).isNull());
+      .assertions(result -> assertThat(result).isNull());
   }
 
   @Test
@@ -88,5 +93,27 @@ public class LogCaptureShould {
         .withMessage(equalTo("a different message"))))
       .isInstanceOf(RuntimeException.class)
       .hasMessage("No Log Found for [ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=\"a different message\", expectedMdc={}}]");
+  }
+
+  @Test
+  public void throws_exception_when_fail_to_verify_captured_events_with_exception_message_not_match() {
+    AssertionsForClassTypes.assertThatThrownBy(() ->
+      CaptureLogs.captureLogEvents(() -> log.info("message", new RuntimeException(
+        new IllegalStateException("Some state is invalid"))))
+        .logged(aMessage()
+          .havingException(logException()
+            .withException(whereCauseMessage(equalTo("another cause message")))
+          ))
+    ).hasMessageContaining("Expecting exception cause to contain \"another cause message\"");
+  }
+
+  @Test
+  public void throw_exception_when_fail_to_verify_captured_events_with_exception_cause_not_match() {
+    assertThatThrownBy(() ->
+      CaptureLogs.captureLogEvents(() -> log.info("message", new RuntimeException(new SocketTimeoutException())))
+        .logged(aMessage()
+          .havingException(logException()
+            .withException(causeOf(IllegalStateException.class))))
+    ).hasMessageContaining("Expecting exception to be instance of class java.lang.IllegalStateException");
   }
 }

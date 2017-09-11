@@ -43,7 +43,7 @@ public class ExpectedLoggingMessage {
   }
 
   private boolean matchesMdc(Map<String, String> mdcPropertyMap) {
-    for (Map.Entry<String, Matcher<String>> entry: mdcMatcher.entrySet()) {
+    for (Map.Entry<String, Matcher<String>> entry : mdcMatcher.entrySet()) {
       String actualMdcValue = mdcPropertyMap.get(entry.getKey());
       if (!entry.getValue().matches(actualMdcValue)) {
         return false;
@@ -92,9 +92,9 @@ public class ExpectedLoggingMessage {
     results.addAll(toList("expectedLoggerNameMatcher", expectedLoggerNameMatcher));
     results.addAll(toList("expectedMdc", mdcMatcher));
 
-//    if (!(expectedLoggedException == ExpectedLoggedException.ANYTHING)) {
-//      results.add("expectedLoggedException" + "=" + expectedLoggedException);
-//    }
+    if (!(expectedLoggedException == ExpectedLoggedException.ANYTHING)) {
+      results.add("expectedLoggedException" + "=" + expectedLoggedException);
+    }
 
     return results.stream().collect(Collectors.joining(", "));
   }

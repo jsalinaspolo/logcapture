@@ -57,6 +57,15 @@ public class ExpectedLoggedExceptionShould {
     assertThat(matches).isFalse();
   }
 
+  @Test
+  public void to_string_method_when_exception_not_match() {
+    ExpectedLoggedException expectedLoggedException = ExpectedLoggedException.logException()
+      .withMessage(equalTo("another error"))
+      .withException(isA(IllegalArgumentException.class));
+
+    assertThat(expectedLoggedException.toString()).isEqualTo("ExpectedLoggedException{expectedMessageMatcher=\"another error\", expectedException=is an instance of java.lang.IllegalArgumentException}");
+  }
+
   private LoggingEvent aLoggingEventWith(Level level, String message, Exception exception) {
     Logger log = (Logger) LoggerFactory.getLogger(this.getClass());
     return new LoggingEvent("fqcn", log, level, message, exception, null);
