@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/mustaine/logcapture.svg?branch=master)](https://travis-ci.org/mustaine/logcapture)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jspcore/logcapture/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jspcore/logcapture)
 [![codecov](https://codecov.io/gh/mustaine/logcapture/branch/master/graph/badge.svg)](https://codecov.io/gh/mustaine/logcapture)
 
 # LogCapture
@@ -36,7 +37,7 @@ information and that does not leak secure information.
 
 ## License
 
-* [The MIT License (MIT)] (http://opensource.org/licenses/MIT)
+This project is licensed under [MIT license](http://opensource.org/licenses/MIT).
 
 ## Contributing
 
