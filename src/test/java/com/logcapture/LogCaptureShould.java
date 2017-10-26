@@ -98,7 +98,7 @@ public class LogCaptureShould {
   @Test
   public void throws_exception_when_fail_to_verify_captured_events_with_exception_message_not_match() {
     AssertionsForClassTypes.assertThatThrownBy(() ->
-      CaptureLogs.captureLogEvents(() -> log.info("message", new RuntimeException(
+      LogbackInterceptor.captureLogEvents(() -> log.info("message", new RuntimeException(
         new IllegalStateException("Some state is invalid"))))
         .logged(aMessage()
           .havingException(logException()
@@ -110,7 +110,7 @@ public class LogCaptureShould {
   @Test
   public void throw_exception_when_fail_to_verify_captured_events_with_exception_cause_not_match() {
     assertThatThrownBy(() ->
-      CaptureLogs.captureLogEvents(() -> log.info("message", new RuntimeException(new SocketTimeoutException())))
+      LogbackInterceptor.captureLogEvents(() -> log.info("message", new RuntimeException(new SocketTimeoutException())))
         .logged(aMessage()
           .havingException(logException()
             .withException(causeOf(IllegalStateException.class))))

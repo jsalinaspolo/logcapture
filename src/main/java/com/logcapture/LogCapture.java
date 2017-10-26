@@ -33,17 +33,17 @@ public class LogCapture<T> {
   }
 
   public static LogCapture<Void> captureLogEvents(Runnable codeBlock) {
-    return CaptureLogs.captureLogEvents(codeBlock);
+    return LogbackInterceptor.captureLogEvents(codeBlock);
   }
 
   public static <T> LogCapture<T> captureLogEvents(Supplier<T> codeBlock) {
-    return CaptureLogs.captureLogEvents(codeBlock);
+    return LogbackInterceptor.captureLogEvents(codeBlock);
   }
 
   public static Await<Void> captureLogEventsAsync(Runnable codeBlock) {
-    return (duration, condition) -> CaptureLogs.captureLogEventsAsync(codeBlock, duration, condition);
+    return (duration, condition) -> LogbackInterceptor.captureLogEventsAsync(codeBlock, duration, condition);
   }
   public static <T> Await<T> captureLogEventsAsync(Supplier<T> codeBlock) {
-    return (duration, condition) -> CaptureLogs.captureLogEventsAsync(codeBlock, duration, condition);
+    return (duration, condition) -> LogbackInterceptor.captureLogEventsAsync(codeBlock, duration, condition);
   }
 }

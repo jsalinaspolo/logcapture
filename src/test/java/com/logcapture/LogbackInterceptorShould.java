@@ -4,25 +4,26 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.logcapture.CaptureLogs.captureLogEvents;
 import static com.logcapture.infrastructure.logback.StubAppender.STUB_APPENDER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
-public class CaptureLogsShould {
+public class LogbackInterceptorShould {
 
   private final Logger log = LoggerFactory.getLogger(this.getClass());
 
+  private final LogbackInterceptor logbackInterceptor = new LogbackInterceptor();
+
   @Test
   public void detach_appender_when_events_are_captured() {
-    captureLogEvents(() -> log.info("a message"));
+    logbackInterceptor.captureLogEvents(() -> log.info("a message"));
     assertStubAppenderIsDetached();
   }
 
   @Test
   public void detach_appender_when_capturing_events_an_exception_is_thrown() {
-    assertThatThrownBy(() -> captureLogEvents(() -> {
+    assertThatThrownBy(() -> logbackInterceptor.captureLogEvents(() -> {
       log.info("a message");
       throw new IllegalStateException();
     })).isInstanceOf(IllegalStateException.class);

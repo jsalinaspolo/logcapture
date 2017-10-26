@@ -15,7 +15,7 @@ import static com.jayway.awaitility.Awaitility.await;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
-public class CaptureLogs {
+class LogbackInterceptor {
 
   public static LogCapture<Void> captureLogEvents(Runnable codeBlock) {
     StubAppender logAppender = new StubAppender();
@@ -43,7 +43,7 @@ public class CaptureLogs {
     }
   }
 
-  public static <T> LogCapture<T> captureLogEventsAsync(Runnable codeBlock, Duration duration, ExpectedLoggingMessage expectedLoggingMessage) {
+  public static LogCapture<Void> captureLogEventsAsync(Runnable codeBlock, Duration duration, ExpectedLoggingMessage expectedLoggingMessage) {
     StubAppender logAppender = new StubAppender();
     Logger root = (Logger) LoggerFactory.getLogger(ROOT_LOGGER_NAME);
 
