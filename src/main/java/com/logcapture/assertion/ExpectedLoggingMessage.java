@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static ch.qos.logback.classic.Level.*;
+import static org.hamcrest.Matchers.equalTo;
+
 public class ExpectedLoggingMessage {
 
   private Matcher<Level> logLevelMatcher = new TypedAnythingMatcher<>();
@@ -29,6 +32,21 @@ public class ExpectedLoggingMessage {
 
   public ExpectedLoggingMessage withLevel(Matcher<Level> errorLevel) {
     this.logLevelMatcher = errorLevel;
+    return this;
+  }
+
+  public ExpectedLoggingMessage debug() {
+    this.logLevelMatcher = equalTo(DEBUG);
+    return this;
+  }
+
+  public ExpectedLoggingMessage info() {
+    this.logLevelMatcher = equalTo(INFO);
+    return this;
+  }
+
+  public ExpectedLoggingMessage error() {
+    this.logLevelMatcher = equalTo(ERROR);
     return this;
   }
 
@@ -55,6 +73,11 @@ public class ExpectedLoggingMessage {
 
   public ExpectedLoggingMessage withMessage(Matcher<String> expectedMessage) {
     this.expectedMessageMatcher = expectedMessage;
+    return this;
+  }
+
+  public ExpectedLoggingMessage withMessage(String expectedMessage) {
+    this.expectedMessageMatcher = equalTo(expectedMessage);
     return this;
   }
 
