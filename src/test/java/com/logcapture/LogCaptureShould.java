@@ -12,7 +12,7 @@ import static ch.qos.logback.classic.Level.INFO;
 import static com.logcapture.LogCapture.captureLogEvents;
 import static com.logcapture.LogCapture.captureLogEventsAsync;
 import static com.logcapture.assertion.ExpectedLoggedException.logException;
-import static com.logcapture.assertion.ExpectedLoggingMessage.aMessage;
+import static com.logcapture.assertion.ExpectedLoggingMessage.aLog;
 import static com.logcapture.matcher.exception.ExceptionCauseMatcher.causeOf;
 import static com.logcapture.matcher.exception.ExceptionCauseMessageMatcher.whereCauseMessage;
 import static java.time.Duration.ofSeconds;
@@ -26,7 +26,7 @@ public class LogCaptureShould {
   @Test
   public void verify_captured_events() {
     captureLogEvents(() -> log.info("a message"))
-      .logged(aMessage()
+      .logged(aLog()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a message")));
   }
@@ -34,7 +34,7 @@ public class LogCaptureShould {
   @Test
   public void verify_captured_events_without_result_assertion_null() {
     captureLogEvents(() -> log.info("a message"))
-      .logged(aMessage()
+      .logged(aLog()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a message")))
       .assertions(result -> assertThat(result).isNull());
@@ -47,7 +47,7 @@ public class LogCaptureShould {
       return "aResult";
     })
       .assertions((result) -> assertThat(result).isEqualTo("aResult"))
-      .logged(aMessage()
+      .logged(aLog()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a message")));
   }
@@ -58,7 +58,7 @@ public class LogCaptureShould {
       log.info("a message");
       return "aResult";
     })
-      .logged(aMessage()
+      .logged(aLog()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a message")))
       .assertions((result) -> assertThat(result).isEqualTo("aResult"));
@@ -67,7 +67,7 @@ public class LogCaptureShould {
   @Test
   public void verify_captured_async_logs_of_runnable() {
     captureLogEventsAsync(() -> new Thread(() -> log.info("a message")).start())
-      .waitAtMost(ofSeconds(1), aMessage()
+      .waitAtMost(ofSeconds(1), aLog()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a message")))
       .assertions(result -> assertThat(result).isNull());
@@ -79,7 +79,7 @@ public class LogCaptureShould {
       log.info("a message");
       return "aResult";
     }))
-      .waitAtMost(ofSeconds(1), aMessage()
+      .waitAtMost(ofSeconds(1), aLog()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a message")))
       .assertions(result -> assertThat(result).isCompletedWithValue("aResult"));
@@ -88,7 +88,7 @@ public class LogCaptureShould {
   @Test
   public void fail_when_verify_captured_events_not_found() {
     assertThatThrownBy(() -> captureLogEvents(() -> log.info("a message"))
-      .logged(aMessage()
+      .logged(aLog()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a different message"))))
       .isInstanceOf(RuntimeException.class)
@@ -100,7 +100,7 @@ public class LogCaptureShould {
     AssertionsForClassTypes.assertThatThrownBy(() ->
       LogbackInterceptor.captureLogEvents(() -> log.info("message", new RuntimeException(
         new IllegalStateException("Some state is invalid"))))
-        .logged(aMessage()
+        .logged(aLog()
           .havingException(logException()
             .withException(whereCauseMessage(equalTo("another cause message")))
           ))
@@ -111,7 +111,7 @@ public class LogCaptureShould {
   public void throw_exception_when_fail_to_verify_captured_events_with_exception_cause_not_match() {
     assertThatThrownBy(() ->
       LogbackInterceptor.captureLogEvents(() -> log.info("message", new RuntimeException(new SocketTimeoutException())))
-        .logged(aMessage()
+        .logged(aLog()
           .havingException(logException()
             .withException(causeOf(IllegalStateException.class))))
     ).hasMessageContaining("Expecting exception to be instance of class java.lang.IllegalStateException");

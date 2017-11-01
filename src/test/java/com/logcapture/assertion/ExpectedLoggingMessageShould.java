@@ -3,7 +3,6 @@ package com.logcapture.assertion;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.LoggingEvent;
-import com.logcapture.matcher.exception.ExceptionCauseMatcher;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -11,10 +10,9 @@ import org.slf4j.MDC;
 import static ch.qos.logback.classic.Level.ERROR;
 import static ch.qos.logback.classic.Level.INFO;
 import static com.logcapture.assertion.ExpectedLoggedException.logException;
-import static com.logcapture.assertion.ExpectedLoggingMessage.aMessage;
+import static com.logcapture.assertion.ExpectedLoggingMessage.aLog;
 import static com.logcapture.matcher.exception.ExceptionCauseMatcher.causeOf;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Fail.fail;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
@@ -23,7 +21,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void match_when_log_level_match() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage().withLevel(equalTo(INFO));
+    ExpectedLoggingMessage expectedLoggingMessage = aLog().withLevel(equalTo(INFO));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
 
@@ -33,7 +31,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void match_when_message_match() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage().withMessage(equalTo("message"));
+    ExpectedLoggingMessage expectedLoggingMessage = aLog().withMessage(equalTo("message"));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
 
@@ -43,7 +41,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void match_when_length_message_match() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage()
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .length(equalTo(7));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
@@ -55,7 +53,7 @@ public class ExpectedLoggingMessageShould {
   public void match_when_mdc_keys_match() {
     MDC.put("aKey", "someValue");
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage()
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .withMdc("aKey", equalTo("someValue"));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
@@ -66,7 +64,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void match_when_logger_class_match() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage()
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .withLoggerName(equalTo(ExpectedLoggingMessageShould.class.getName()));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
@@ -77,7 +75,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void match_when_exception_class_match() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message", new RuntimeException());
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage()
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .havingException(logException()
         .withException(instanceOf(RuntimeException.class)));
 
@@ -89,7 +87,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void match_when_message_and_log_level_match() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage()
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .withLevel(equalTo(INFO))
       .withMessage(equalTo("message"));
 
@@ -101,7 +99,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void not_match_when_log_level_different() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage()
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .withMessage(equalTo("differentMessage"));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
@@ -112,7 +110,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void not_match_when_message_different() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage()
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .withMessage(equalTo("anotherMessage"));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
@@ -123,7 +121,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void not_match_when_message_length_different() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage()
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .length(equalTo(8));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
@@ -135,7 +133,7 @@ public class ExpectedLoggingMessageShould {
   public void not_match_when_mdc_keys_different() {
     MDC.put("aKey", "differentValue");
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage()
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .withMdc("aKey", equalTo("someValue"));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
@@ -146,7 +144,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void not_match_when_logger_class_different() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage()
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .withLoggerName(equalTo("anotherClassName"));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
@@ -156,7 +154,7 @@ public class ExpectedLoggingMessageShould {
 
   @Test
   public void describe_failure_using_to_string() {
-    ExpectedLoggingMessage expectedLoggingMessage = aMessage()
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .withLevel(equalTo(ERROR))
       .withMessage(equalTo("message"))
       .length(equalTo(8))
