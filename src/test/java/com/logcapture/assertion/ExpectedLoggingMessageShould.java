@@ -7,8 +7,7 @@ import org.junit.Test;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-import static ch.qos.logback.classic.Level.ERROR;
-import static ch.qos.logback.classic.Level.INFO;
+import static ch.qos.logback.classic.Level.*;
 import static com.logcapture.assertion.ExpectedLoggedException.logException;
 import static com.logcapture.assertion.ExpectedLoggingMessage.aLog;
 import static com.logcapture.matcher.exception.ExceptionCauseMatcher.causeOf;
@@ -27,6 +26,47 @@ public class ExpectedLoggingMessageShould {
 
     assertThat(matches).isTrue();
   }
+
+  @Test
+  public void match_when_debug_log_level_match() {
+    LoggingEvent logEvent = aLoggingEventWith(DEBUG, "message");
+    ExpectedLoggingMessage expectedLoggingMessage = aLog().debug();
+
+    boolean matches = expectedLoggingMessage.matches(logEvent);
+
+    assertThat(matches).isTrue();
+  }
+
+  @Test
+  public void match_when_info_log_level_match() {
+    LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
+    ExpectedLoggingMessage expectedLoggingMessage = aLog().info();
+
+    boolean matches = expectedLoggingMessage.matches(logEvent);
+
+    assertThat(matches).isTrue();
+  }
+
+  @Test
+  public void match_when_warn_log_level_match() {
+    LoggingEvent logEvent = aLoggingEventWith(WARN, "message");
+    ExpectedLoggingMessage expectedLoggingMessage = aLog().warn();
+
+    boolean matches = expectedLoggingMessage.matches(logEvent);
+
+    assertThat(matches).isTrue();
+  }
+
+  @Test
+  public void match_when_error_log_level_match() {
+    LoggingEvent logEvent = aLoggingEventWith(ERROR, "message");
+    ExpectedLoggingMessage expectedLoggingMessage = aLog().error();
+
+    boolean matches = expectedLoggingMessage.matches(logEvent);
+
+    assertThat(matches).isTrue();
+  }
+
 
   @Test
   public void match_when_message_match() {
