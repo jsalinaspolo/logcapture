@@ -45,6 +45,11 @@ public class ExpectedLoggingMessage {
     return this;
   }
 
+  public ExpectedLoggingMessage warn() {
+    this.logLevelMatcher = equalTo(WARN);
+    return this;
+  }
+
   public ExpectedLoggingMessage error() {
     this.logLevelMatcher = equalTo(ERROR);
     return this;
