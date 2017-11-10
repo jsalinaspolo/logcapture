@@ -180,6 +180,7 @@ public class ExpectedLoggingMessageShould {
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
 
+    MDC.clear();
     assertThat(matches).isFalse();
   }
 

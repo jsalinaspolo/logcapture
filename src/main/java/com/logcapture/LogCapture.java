@@ -2,6 +2,7 @@ package com.logcapture;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.logcapture.assertion.ExpectedLoggingMessage;
+import com.logcapture.assertion.VerificationException;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -24,7 +25,7 @@ public class LogCapture<T> {
       }
     }
 
-    throw new RuntimeException("No Log Found for [" + expectedLoggingMessage + "]");
+    throw VerificationException.forUnmatchedLog(expectedLoggingMessage, events);
   }
 
   public LogCapture<T> assertions(Consumer<T> assertions) {

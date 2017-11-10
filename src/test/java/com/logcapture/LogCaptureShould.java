@@ -1,5 +1,6 @@
 package com.logcapture;
 
+import com.logcapture.assertion.VerificationException;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -91,8 +92,7 @@ public class LogCaptureShould {
       .logged(aLog()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a different message"))))
-      .isInstanceOf(RuntimeException.class)
-      .hasMessage("No Log Found for [ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=\"a different message\", expectedMdc={}}]");
+      .isInstanceOf(VerificationException.class);
   }
 
   @Test
