@@ -8,14 +8,44 @@ LogCapture is a testing library for assert logging messages.
  
 ## How it works
 
-A simple example for assert a log message
+Using the DSL:
 
 ```java
 captureLogEvents(() -> log.info("a message"))
-  .logged(aMessage()
-    .withLevel(equalTo(INFO))
-    .withMessage(equalTo("a message")))
+  .logged(aLog().info()
+    .withMessage("a message"))
 
+```
+
+Using JUnit Rule:
+
+```java
+@Rule
+public LogCaptureRule logCaptureRule = new LogCaptureRule();
+
+@Test
+public void verify_logs_using_rule() {
+  log.info("a message");
+
+  logCaptureRule.logged(aLog().info().withMessage("a message"));
+}
+```
+
+More example how to use the library at [ExampleShould.java](https://github.com/mustaine/logcapture/blob/master/src/test/java/com/logcapture/example/ExampleShould.java) 
+
+
+## Binaries
+
+Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.jspcore%22%20AND%20a%3A%22logcapture%22).
+
+Example for Maven:
+
+```xml
+<dependency>
+    <groupId>com.jspcore</groupId>
+    <artifactId>logcapture</artifactId>
+    <version>x.y</version>
+</dependency>
 ```
 
 ## Why LogCapture?
