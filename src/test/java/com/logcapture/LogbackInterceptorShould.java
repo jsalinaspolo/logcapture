@@ -11,19 +11,17 @@ import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
 public class LogbackInterceptorShould {
 
-  private final Logger log = LoggerFactory.getLogger(this.getClass());
-
-  private final LogbackInterceptor logbackInterceptor = new LogbackInterceptor();
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
   @Test
   public void detach_appender_when_events_are_captured() {
-    logbackInterceptor.captureLogEvents(() -> log.info("a message"));
+    LogbackInterceptor.captureLogEvents(() -> log.info("a message"));
     assertStubAppenderIsDetached();
   }
 
   @Test
   public void detach_appender_when_capturing_events_an_exception_is_thrown() {
-    assertThatThrownBy(() -> logbackInterceptor.captureLogEvents(() -> {
+    assertThatThrownBy(() -> LogbackInterceptor.captureLogEvents(() -> {
       log.info("a message");
       throw new IllegalStateException();
     })).isInstanceOf(IllegalStateException.class);

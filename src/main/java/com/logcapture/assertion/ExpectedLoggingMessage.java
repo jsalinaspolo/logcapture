@@ -7,6 +7,7 @@ import org.hamcrest.Matcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,14 +76,17 @@ public class ExpectedLoggingMessage {
       .allMatch(entry -> entry.getValue().matches(mdcPropertyMap.get(entry.getKey())));
   }
 
-  @SafeVarargs
-  public final ExpectedLoggingMessage withMessage(Matcher<String>... expectedMessages) {
-    expectedMessageMatcher.addAll(Arrays.asList(expectedMessages));
-    return this;
+  public final ExpectedLoggingMessage withMessage(Matcher<String> expectedMessages) {
+    return withMessage(singleton(expectedMessages));
   }
 
-  public final ExpectedLoggingMessage withMessage(Matcher<String> expectedMessages) {
-    expectedMessageMatcher.addAll(singleton(expectedMessages));
+  @SafeVarargs
+  public final ExpectedLoggingMessage withMessage(Matcher<String>... expectedMessages) {
+    return withMessage(Arrays.asList(expectedMessages));
+  }
+
+  public final ExpectedLoggingMessage withMessage(Collection<Matcher<String>> expectedMessages) {
+    expectedMessageMatcher.addAll(expectedMessages);
     return this;
   }
 
