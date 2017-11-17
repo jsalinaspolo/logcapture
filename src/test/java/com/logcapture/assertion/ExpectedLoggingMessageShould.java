@@ -15,6 +15,7 @@ import static com.logcapture.assertion.ExpectedLoggedException.logException;
 import static com.logcapture.assertion.ExpectedLoggingMessage.aLog;
 import static com.logcapture.matcher.exception.ExceptionCauseMatcher.causeOf;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
@@ -81,6 +82,35 @@ public class ExpectedLoggingMessageShould {
   }
 
   @Test
+  public void match_when_multiple_messages_matches() {
+    LoggingEvent logEvent = aLoggingEventWith(INFO, "message has another message");
+
+    ExpectedLoggingMessage expectedLoggingMessage = aLog().withMessage(containsString("message"),
+      containsString("has"),
+      containsString("another")
+    );
+
+    boolean matches = expectedLoggingMessage.matches(logEvent);
+
+    assertThat(matches).isTrue();
+  }
+
+  @Test
+  public void not_match_when_a_message_not_matches() {
+    LoggingEvent logEvent = aLoggingEventWith(INFO, "message has another message");
+
+    ExpectedLoggingMessage expectedLoggingMessage = aLog().withMessage(containsString("message"),
+      containsString("has"),
+      containsString("NO_MATCH"),
+      containsString("another")
+    );
+
+    boolean matches = expectedLoggingMessage.matches(logEvent);
+
+    assertThat(matches).isFalse();
+  }
+
+  @Test
   public void match_when_length_message_match() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
     ExpectedLoggingMessage expectedLoggingMessage = aLog()
@@ -97,6 +127,20 @@ public class ExpectedLoggingMessageShould {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
     ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .withMdc("aKey", equalTo("someValue"));
+
+    boolean matches = expectedLoggingMessage.matches(logEvent);
+
+    assertThat(matches).isTrue();
+  }
+
+  @Test
+  public void match_when_multiple_mdc_keys_match() {
+    MDC.put("aKey", "someValue");
+    MDC.put("anotherKey", "anotherValue");
+    LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
+      .withMdc("aKey", equalTo("someValue"))
+      .withMdc("anotherKey", equalTo("anotherValue"));
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
 
@@ -185,6 +229,21 @@ public class ExpectedLoggingMessageShould {
   }
 
   @Test
+  public void not_match_when_a_mdc_keys_is_different() {
+    MDC.put("aKey", "differentValue");
+    MDC.put("anotherKey", "anotherValue");
+    LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
+      .withMdc("aKey", equalTo("unmatchedValue"))
+      .withMdc("anotherKey", equalTo("anotherValue"));
+
+    boolean matches = expectedLoggingMessage.matches(logEvent);
+
+    MDC.clear();
+    assertThat(matches).isFalse();
+  }
+
+  @Test
   public void not_match_when_logger_class_different() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
     ExpectedLoggingMessage expectedLoggingMessage = aLog()
@@ -209,7 +268,7 @@ public class ExpectedLoggingMessageShould {
 
     assertThat(expectedLoggingMessage.toString())
       .contains("logLevelMatcher=<ERROR>")
-      .contains("expectedMessageMatcher=\"message\"")
+      .contains("expectedMessageMatcher=[\"message\"]")
       .contains("expectedLengthMatcher=<8>")
       .contains("expectedMdc={aKey=\"some\"}")
       .contains("expectedLoggerNameMatcher=\"className\"")

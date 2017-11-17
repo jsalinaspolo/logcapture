@@ -6,18 +6,23 @@ import com.logcapture.matcher.TypedAnythingMatcher;
 import org.hamcrest.Matcher;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static ch.qos.logback.classic.Level.*;
+import static ch.qos.logback.classic.Level.DEBUG;
+import static ch.qos.logback.classic.Level.ERROR;
+import static ch.qos.logback.classic.Level.INFO;
+import static ch.qos.logback.classic.Level.WARN;
+import static java.util.Collections.singleton;
 import static org.hamcrest.Matchers.equalTo;
 
 public class ExpectedLoggingMessage {
 
   private Matcher<Level> logLevelMatcher = new TypedAnythingMatcher<>();
-  private Matcher<String> expectedMessageMatcher = new TypedAnythingMatcher<>();
+  private List<Matcher<String>> expectedMessageMatcher = new ArrayList<>();
   private Matcher<Integer> expectedLengthMatcher = new TypedAnythingMatcher<>();
   private Matcher<String> expectedLoggerNameMatcher = new TypedAnythingMatcher<>();
   private ExpectedLoggedException expectedLoggedException = ExpectedLoggedException.ANYTHING;
@@ -31,34 +36,34 @@ public class ExpectedLoggingMessage {
   }
 
   public ExpectedLoggingMessage withLevel(Matcher<Level> errorLevel) {
-    this.logLevelMatcher = errorLevel;
+    logLevelMatcher = errorLevel;
     return this;
   }
 
   public ExpectedLoggingMessage debug() {
-    this.logLevelMatcher = equalTo(DEBUG);
+    logLevelMatcher = equalTo(DEBUG);
     return this;
   }
 
   public ExpectedLoggingMessage info() {
-    this.logLevelMatcher = equalTo(INFO);
+    logLevelMatcher = equalTo(INFO);
     return this;
   }
 
   public ExpectedLoggingMessage warn() {
-    this.logLevelMatcher = equalTo(WARN);
+    logLevelMatcher = equalTo(WARN);
     return this;
   }
 
   public ExpectedLoggingMessage error() {
-    this.logLevelMatcher = equalTo(ERROR);
+    logLevelMatcher = equalTo(ERROR);
     return this;
   }
 
   public boolean matches(ILoggingEvent event) {
     return
       logLevelMatcher.matches(event.getLevel()) &&
-        expectedMessageMatcher.matches(event.getFormattedMessage()) &&
+        expectedMessageMatcher.stream().allMatch(matcher -> matcher.matches(event.getFormattedMessage())) &&
         expectedLoggedException.matches(event) &&
         expectedLoggerNameMatcher.matches(event.getLoggerName()) &&
         expectedLengthMatcher.matches(event.getFormattedMessage().length()) &&
@@ -66,28 +71,27 @@ public class ExpectedLoggingMessage {
   }
 
   private boolean matchesMdc(Map<String, String> mdcPropertyMap) {
-    for (Map.Entry<String, Matcher<String>> entry : mdcMatcher.entrySet()) {
-      String actualMdcValue = mdcPropertyMap.get(entry.getKey());
-      if (!entry.getValue().matches(actualMdcValue)) {
-        return false;
-      }
-    }
-
-    return true;
+    return mdcMatcher.entrySet().stream()
+      .allMatch(entry -> entry.getValue().matches(mdcPropertyMap.get(entry.getKey())));
   }
 
-  public ExpectedLoggingMessage withMessage(Matcher<String> expectedMessage) {
-    this.expectedMessageMatcher = expectedMessage;
+  @SafeVarargs
+  public final ExpectedLoggingMessage withMessage(Matcher<String>... expectedMessages) {
+    expectedMessageMatcher.addAll(Arrays.asList(expectedMessages));
+    return this;
+  }
+
+  public final ExpectedLoggingMessage withMessage(Matcher<String> expectedMessages) {
+    expectedMessageMatcher.addAll(singleton(expectedMessages));
     return this;
   }
 
   public ExpectedLoggingMessage withMessage(String expectedMessage) {
-    this.expectedMessageMatcher = equalTo(expectedMessage);
-    return this;
+    return withMessage(equalTo(expectedMessage));
   }
 
   public ExpectedLoggingMessage withLoggerName(Matcher<String> expectedLoggerName) {
-    this.expectedLoggerNameMatcher = expectedLoggerName;
+    expectedLoggerNameMatcher = expectedLoggerName;
     return this;
   }
 

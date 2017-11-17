@@ -49,7 +49,7 @@ public class LogCaptureShould {
       log.info("a message");
       return "aResult";
     })
-      .assertions((result) -> assertThat(result).isEqualTo("aResult"))
+      .assertions(result -> assertThat(result).isEqualTo("aResult"))
       .logged(aLog()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a message")));
@@ -64,7 +64,7 @@ public class LogCaptureShould {
       .logged(aLog()
         .withLevel(equalTo(INFO))
         .withMessage(equalTo("a message")))
-      .assertions((result) -> assertThat(result).isEqualTo("aResult"));
+      .assertions(result -> assertThat(result).isEqualTo("aResult"));
   }
 
   @Test
@@ -134,7 +134,8 @@ public class LogCaptureShould {
     captureLogEvents(() -> {
       logNotInRoot.info("a message");
       return "aResult";
-    }, LOG_NAME).assertions((result) -> assertThat(result).isEqualTo("aResult"))
+    }, LOG_NAME)
+      .assertions(result -> assertThat(result).isEqualTo("aResult"))
       .logged(aLog().info().withMessage("a message"));
   }
 
