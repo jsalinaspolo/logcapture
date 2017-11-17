@@ -15,7 +15,16 @@ import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
 public class LogCaptureRule implements MethodRule, TestRule {
 
+  private final String loggerName;
   private StubAppender logAppender;
+
+  public LogCaptureRule() {
+    this(ROOT_LOGGER_NAME);
+  }
+
+  public LogCaptureRule(String loggerName) {
+    this.loggerName = loggerName;
+  }
 
   @Override
   public Statement apply(Statement base, Description description) {
@@ -28,7 +37,7 @@ public class LogCaptureRule implements MethodRule, TestRule {
       @Override
       public void evaluate() throws Throwable {
         logAppender = new StubAppender();
-        Logger root = (Logger) LoggerFactory.getLogger(ROOT_LOGGER_NAME);
+        Logger root = (Logger) LoggerFactory.getLogger(loggerName);
 
         root.addAppender(logAppender);
         try {
@@ -40,7 +49,8 @@ public class LogCaptureRule implements MethodRule, TestRule {
     };
   }
 
-  public void logged(ExpectedLoggingMessage expectedLoggingMessage) {
+  public LogCaptureRule logged(ExpectedLoggingMessage expectedLoggingMessage) {
     new LogCapture<>(logAppender.events(), null).logged(expectedLoggingMessage);
+    return this;
   }
 }

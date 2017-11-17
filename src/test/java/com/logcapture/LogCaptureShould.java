@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.CompletableFuture;
 
+import static ch.qos.logback.classic.Level.DEBUG;
 import static ch.qos.logback.classic.Level.INFO;
 import static com.logcapture.LogCapture.captureLogEvents;
 import static com.logcapture.LogCapture.captureLogEventsAsync;
@@ -22,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.Matchers.equalTo;
 
 public class LogCaptureShould {
+  private static final String LOG_NAME = "aLogNotAttachedToRoot";
   private final Logger log = LoggerFactory.getLogger(LogCaptureShould.class);
 
   @Test
@@ -115,5 +117,31 @@ public class LogCaptureShould {
           .havingException(logException()
             .withException(causeOf(IllegalStateException.class))))
     ).hasMessageContaining("Expecting exception to be instance of class java.lang.IllegalStateException");
+  }
+
+  @Test
+  public void verify_log_when_is_not_in_root() {
+    Logger logNotInRoot = createLogger(LOG_NAME);
+
+    captureLogEvents(() -> logNotInRoot.info("a message"), LOG_NAME)
+      .logged(aLog().info().withMessage("a message"));
+  }
+
+  @Test
+  public void verify_log_when_is_not_in_root_asserting_result() {
+    Logger logNotInRoot = createLogger(LOG_NAME);
+
+    captureLogEvents(() -> {
+      logNotInRoot.info("a message");
+      return "aResult";
+    }, LOG_NAME).assertions((result) -> assertThat(result).isEqualTo("aResult"))
+      .logged(aLog().info().withMessage("a message"));
+  }
+
+  private Logger createLogger(String name) {
+    ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(name);
+    logger.setLevel(DEBUG);
+    logger.setAdditive(false);
+    return logger;
   }
 }

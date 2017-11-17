@@ -37,13 +37,22 @@ public class LogCapture<T> {
     return LogbackInterceptor.captureLogEvents(codeBlock);
   }
 
+  public static LogCapture<Void> captureLogEvents(Runnable codeBlock, String loggerName) {
+    return LogbackInterceptor.captureLogEvents(codeBlock, loggerName);
+  }
+
   public static <T> LogCapture<T> captureLogEvents(Supplier<T> codeBlock) {
     return LogbackInterceptor.captureLogEvents(codeBlock);
+  }
+
+  public static <T> LogCapture<T> captureLogEvents(Supplier<T> codeBlock, String loggerName) {
+    return LogbackInterceptor.captureLogEvents(codeBlock, loggerName);
   }
 
   public static Await<Void> captureLogEventsAsync(Runnable codeBlock) {
     return (duration, condition) -> LogbackInterceptor.captureLogEventsAsync(codeBlock, duration, condition);
   }
+
   public static <T> Await<T> captureLogEventsAsync(Supplier<T> codeBlock) {
     return (duration, condition) -> LogbackInterceptor.captureLogEventsAsync(codeBlock, duration, condition);
   }

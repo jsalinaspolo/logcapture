@@ -18,21 +18,20 @@ import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 class LogbackInterceptor {
 
   public static LogCapture<Void> captureLogEvents(Runnable codeBlock) {
-    StubAppender logAppender = new StubAppender();
-    Logger root = (Logger) LoggerFactory.getLogger(ROOT_LOGGER_NAME);
+    return captureLogEvents(codeBlock, ROOT_LOGGER_NAME);
+  }
 
-    root.addAppender(logAppender);
-    try {
-      codeBlock.run();
-      return new LogCapture<>(logAppender.events(), null);
-    } finally {
-      root.detachAppender(logAppender);
-    }
+  public static LogCapture<Void> captureLogEvents(Runnable codeBlock, String loggerName) {
+    return captureLogEvents(wrapRunnable(codeBlock), loggerName);
   }
 
   public static <T> LogCapture<T> captureLogEvents(Supplier<T> codeBlock) {
+    return captureLogEvents(codeBlock, ROOT_LOGGER_NAME);
+  }
+
+  public static <T> LogCapture<T> captureLogEvents(Supplier<T> codeBlock, String loggerName) {
     StubAppender logAppender = new StubAppender();
-    Logger root = (Logger) LoggerFactory.getLogger(ROOT_LOGGER_NAME);
+    Logger root = (Logger) LoggerFactory.getLogger(loggerName);
 
     root.addAppender(logAppender);
     try {
@@ -44,17 +43,7 @@ class LogbackInterceptor {
   }
 
   public static LogCapture<Void> captureLogEventsAsync(Runnable codeBlock, Duration duration, ExpectedLoggingMessage expectedLoggingMessage) {
-    StubAppender logAppender = new StubAppender();
-    Logger root = (Logger) LoggerFactory.getLogger(ROOT_LOGGER_NAME);
-
-    root.addAppender(logAppender);
-    try {
-      codeBlock.run();
-      awaitForLogMessage(duration, hasLoggedMessage(logAppender.events(), expectedLoggingMessage));
-      return new LogCapture<>(logAppender.events(), null);
-    } finally {
-      root.detachAppender(logAppender);
-    }
+    return captureLogEventsAsync(wrapRunnable(codeBlock), duration, expectedLoggingMessage);
   }
 
   public static <T> LogCapture<T> captureLogEventsAsync(Supplier<T> codeBlock, Duration duration, ExpectedLoggingMessage expectedLoggingMessage) {
@@ -69,6 +58,13 @@ class LogbackInterceptor {
     } finally {
       root.detachAppender(logAppender);
     }
+  }
+
+  private static Supplier<Void> wrapRunnable(Runnable codeBlock) {
+    return () -> {
+      codeBlock.run();
+      return null;
+    };
   }
 
   private static Callable<Boolean> hasLoggedMessage(List<ILoggingEvent> events, ExpectedLoggingMessage expectedLoggingMessage) {
