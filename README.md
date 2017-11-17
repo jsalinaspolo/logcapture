@@ -44,7 +44,7 @@ Example for Maven:
 <dependency>
     <groupId>com.jspcore</groupId>
     <artifactId>logcapture</artifactId>
-    <version>x.y</version>
+    <version>x.y.z</version>
 </dependency>
 ```
 
