@@ -4,6 +4,8 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.logcapture.matcher.TypedAnythingMatcher;
 import org.hamcrest.Matcher;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +25,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class ExpectedLoggingMessage {
 
   private Matcher<Level> logLevelMatcher = new TypedAnythingMatcher<>();
+  private Matcher<Marker> markerlMatcher = new TypedAnythingMatcher<>();
   private List<Matcher<String>> expectedMessageMatcher = new ArrayList<>();
   private Matcher<Integer> expectedLengthMatcher = new TypedAnythingMatcher<>();
   private Matcher<String> expectedLoggerNameMatcher = new TypedAnythingMatcher<>();
@@ -39,6 +42,19 @@ public class ExpectedLoggingMessage {
   public ExpectedLoggingMessage withLevel(Matcher<Level> errorLevel) {
     logLevelMatcher = errorLevel;
     return this;
+  }
+
+  public ExpectedLoggingMessage withMarker(Matcher<Marker> marker) {
+    markerlMatcher = marker;
+    return this;
+  }
+
+  public ExpectedLoggingMessage withMarker(Marker marker) {
+    return withMarker(equalTo(marker));
+  }
+
+  public ExpectedLoggingMessage withMarker(String marker) {
+    return withMarker(MarkerFactory.getMarker(marker));
   }
 
   public ExpectedLoggingMessage debug() {
@@ -64,6 +80,7 @@ public class ExpectedLoggingMessage {
   public boolean matches(ILoggingEvent event) {
     return
       logLevelMatcher.matches(event.getLevel()) &&
+        markerlMatcher.matches(event.getMarker()) &&
         expectedMessageMatcher.stream().allMatch(matcher -> matcher.matches(event.getFormattedMessage())) &&
         expectedLoggedException.matches(event) &&
         expectedLoggerNameMatcher.matches(event.getLoggerName()) &&
@@ -123,6 +140,7 @@ public class ExpectedLoggingMessage {
     List<String> results = new ArrayList<>();
 
     results.addAll(toList("logLevelMatcher", logLevelMatcher));
+    results.addAll(toList("markerMatcher", markerlMatcher));
     results.addAll(toList("expectedMessageMatcher", expectedMessageMatcher));
     results.addAll(toList("expectedLengthMatcher", expectedLengthMatcher));
     results.addAll(toList("expectedLoggerNameMatcher", expectedLoggerNameMatcher));
