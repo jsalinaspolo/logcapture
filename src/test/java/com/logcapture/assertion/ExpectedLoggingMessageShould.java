@@ -6,6 +6,7 @@ import ch.qos.logback.classic.spi.LoggingEvent;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.slf4j.MarkerFactory;
 
 import static ch.qos.logback.classic.Level.DEBUG;
 import static ch.qos.logback.classic.Level.ERROR;
@@ -248,6 +249,45 @@ public class ExpectedLoggingMessageShould {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
     ExpectedLoggingMessage expectedLoggingMessage = aLog()
       .withLoggerName(equalTo("anotherClassName"));
+
+    boolean matches = expectedLoggingMessage.matches(logEvent);
+
+    assertThat(matches).isFalse();
+  }
+
+  @Test
+  public void match_for_expected_marker() {
+    LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
+    logEvent.setMarker(MarkerFactory.getMarker("A_MARKER"));
+
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
+      .withMarker(MarkerFactory.getMarker("A_MARKER"));
+
+    boolean matches = expectedLoggingMessage.matches(logEvent);
+
+    assertThat(matches).isTrue();
+  }
+
+  @Test
+  public void match_for_expected_marker_label() {
+    LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
+    logEvent.setMarker(MarkerFactory.getMarker("A_MARKER"));
+
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
+      .withMarker("A_MARKER");
+
+    boolean matches = expectedLoggingMessage.matches(logEvent);
+
+    assertThat(matches).isTrue();
+  }
+
+  @Test
+  public void no_match_for_unexpected_marker() {
+    LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
+    logEvent.setMarker(MarkerFactory.getMarker("A_MARKER"));
+
+    ExpectedLoggingMessage expectedLoggingMessage = aLog()
+      .withMarker("ANOTHER_MARKER");
 
     boolean matches = expectedLoggingMessage.matches(logEvent);
 
