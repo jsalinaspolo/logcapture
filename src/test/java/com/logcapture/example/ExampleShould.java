@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
   import org.slf4j.MDC;
+import org.slf4j.MarkerFactory;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -28,6 +29,15 @@ public class ExampleShould {
     captureLogEvents(() -> underTest.methodThatLogsStuff())
       .logged(aLog().info()
         .withMessage("a message"));
+  }
+
+  @Test
+  public void verify_captured_events_with_marker() {
+    captureLogEvents(() -> log.info(MarkerFactory.getMarker("a_marker"), "a message"))
+      .logged(aLog()
+        .withLevel(equalTo(INFO))
+        .withMarker("a_marker")
+        .withMessage(equalTo("a message")));
   }
 
   @Test

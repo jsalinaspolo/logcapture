@@ -301,6 +301,7 @@ public class ExpectedLoggingMessageShould {
       .withMessage(equalTo("message"))
       .length(equalTo(8))
       .withMdc("aKey", equalTo("some"))
+      .withMarker("A_MARKER")
       .withLoggerName(equalTo("className"))
       .havingException(logException()
         .withMessage(equalTo("exception thrown"))
@@ -308,6 +309,7 @@ public class ExpectedLoggingMessageShould {
 
     assertThat(expectedLoggingMessage.toString())
       .contains("logLevelMatcher=<ERROR>")
+      .contains("markerMatcher=<A_MARKER>")
       .contains("expectedMessageMatcher=[\"message\"]")
       .contains("expectedLengthMatcher=<8>")
       .contains("expectedMdc={aKey=\"some\"}")
