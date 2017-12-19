@@ -31,8 +31,8 @@ public class VerificationExceptionShould {
     assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected at least one log matching: \n" +
       "ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=[\"a log message\"], expectedMdc={}}\n" +
       "Logs received: \n" +
-      "level: INFO mdc: {} message: a different message\n" +
-      "level: INFO mdc: {} message: another different message");
+      "level: INFO marker: null mdc: {} message: a different message\n" +
+      "level: INFO marker: null mdc: {} message: another different message");
   }
 
   @Test
@@ -57,8 +57,8 @@ public class VerificationExceptionShould {
     assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected at least one log matching: \n" +
       "ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=[\"a log message\"], expectedMdc={anotherKey=\"anotherValue\", aKey=\"aValue\"}}\n" +
       "Logs received: \n" +
-      "level: INFO mdc: {anotherKey=anotherValue, aKey=aValue} message: a different message\n" +
-      "level: INFO mdc: {anotherKey=anotherValue, aKey=aValue} message: another different message");
+      "level: INFO marker: null mdc: {anotherKey=anotherValue, aKey=aValue} message: a different message\n" +
+      "level: INFO marker: null mdc: {anotherKey=anotherValue, aKey=aValue} message: another different message");
   }
 
   private LoggingEvent aLoggingEventWith(Level level, String message) {

@@ -22,8 +22,9 @@ public class VerificationException extends AssertionError {
   }
 
   private static String formatLogEvent(ILoggingEvent log) {
-    return String.format("level: %s mdc: %s message: %s", log.getLevel(),
-      log.getMDCPropertyMap(),
-      log.getFormattedMessage());
+    return String.format("level: %s marker: %s mdc: %s message: %s", log.getLevel(),
+                         log.getMarker(),
+                         log.getMDCPropertyMap(),
+                         log.getFormattedMessage());
   }
 }
