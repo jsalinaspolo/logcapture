@@ -4,7 +4,7 @@
 
 # LogCapture
 
-LogCapture is a testing library for assert logging messages. 
+LogCapture is a testing library for asserting logging messages.
  
 ## How it works
 
