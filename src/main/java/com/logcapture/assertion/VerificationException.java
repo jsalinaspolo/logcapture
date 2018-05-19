@@ -1,6 +1,7 @@
 package com.logcapture.assertion;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import org.hamcrest.Matcher;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,9 +12,9 @@ public class VerificationException extends AssertionError {
     super(message);
   }
 
-  public static VerificationException forUnmatchedLog(ExpectedLoggingMessage expectedLogMessage, List<ILoggingEvent> logEvents) {
+  public static VerificationException forUnmatchedLog(Matcher<List<ILoggingEvent>> expectedLogMessage, List<ILoggingEvent> logEvents) {
     return new VerificationException(String.format(
-      "Expected at least one log matching: \n%s\nLogs received: \n%s",
+      "Expected matching: \n%s\nLogs received: \n%s",
       expectedLogMessage.toString(),
       logEvents.stream()
         .map(VerificationException::formatLogEvent)

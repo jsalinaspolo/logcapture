@@ -2,6 +2,7 @@ package com.logcapture;
 
 import com.logcapture.assertion.VerificationException;
 import org.assertj.core.api.AssertionsForClassTypes;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +22,30 @@ import static com.logcapture.matcher.exception.ExceptionCauseMessageMatcher.wher
 import static java.time.Duration.ofSeconds;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 
 public class LogCaptureShould {
   private static final String LOG_NAME = "aLogNotAttachedToRoot";
   private final Logger log = LoggerFactory.getLogger(LogCaptureShould.class);
+
+  @Test
+  public void verify_missing_events() {
+    captureLogEvents(() -> log.info("a message"))
+      .logged(not(aLog()
+        .withLevel(equalTo(INFO))
+        .withMessage(equalTo("missing message"))));
+  }
+
+  @Test
+  public void verify_multiple_events() {
+    captureLogEvents(() -> {
+      log.info("first message");
+      log.debug("second message");})
+      .logged(allOf(aLog().withLevel(equalTo(INFO)).withMessage(equalTo("first message")),
+        aLog().withLevel(equalTo(DEBUG)).withMessage(equalTo("second message"))));
+  }
 
   @Test
   public void verify_captured_events() {

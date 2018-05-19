@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Map;
 
 import static com.logcapture.assertion.ExpectedLoggingMessage.aLog;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 
 public class VerificationExceptionShould {
@@ -28,7 +30,7 @@ public class VerificationExceptionShould {
 
     VerificationException verificationException = VerificationException.forUnmatchedLog(expectedLogMessage, logEvents);
 
-    assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected at least one log matching: \n" +
+    assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected matching: \n" +
       "ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=[\"a log message\"], expectedMdc={}}\n" +
       "Logs received: \n" +
       "level: INFO marker: null mdc: {} message: a different message\n" +
@@ -54,7 +56,7 @@ public class VerificationExceptionShould {
 
     VerificationException verificationException = VerificationException.forUnmatchedLog(expectedLogMessage, logEvents);
 
-    assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected at least one log matching: \n" +
+    assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected matching: \n" +
       "ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=[\"a log message\"], expectedMdc={anotherKey=\"anotherValue\", aKey=\"aValue\"}}\n" +
       "Logs received: \n" +
       "level: INFO marker: null mdc: {anotherKey=anotherValue, aKey=aValue} message: a different message\n" +
@@ -63,7 +65,9 @@ public class VerificationExceptionShould {
 
   private LoggingEvent aLoggingEventWith(Level level, String message) {
     Logger log = (Logger) LoggerFactory.getLogger(getClass());
-    return new LoggingEvent("fqcn", log, level, message, null, null);
+    LoggingEvent loggingEvent = new LoggingEvent("fqcn", log, level, message, null, null);
+    loggingEvent.setMDCPropertyMap(emptyMap());
+    return loggingEvent;
   }
 
   private LoggingEvent aLoggingEventWith(Level level, String message, Map<String, String> mdcKeys) {
