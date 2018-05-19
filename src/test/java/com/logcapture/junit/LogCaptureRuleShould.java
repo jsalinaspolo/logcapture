@@ -7,8 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static ch.qos.logback.classic.Level.DEBUG;
+import static ch.qos.logback.classic.Level.INFO;
 import static com.logcapture.assertion.ExpectedLoggingMessage.aLog;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 
 public class LogCaptureRuleShould {
   private static final String LOG_NAME = "aLogNotAttachedToRoot";
@@ -19,6 +23,21 @@ public class LogCaptureRuleShould {
 
   @Rule
   public LogCaptureRule logCaptureRuleAttached = new LogCaptureRule(LOG_NAME);
+
+  @Test
+  public void verify_missing_events() {
+    logCaptureRule.logged(not(aLog()
+        .withLevel(equalTo(INFO))
+        .withMessage(equalTo("missing message"))));
+  }
+
+  @Test
+  public void verify_multiple_events() {
+    log.info("first message");
+    log.debug("second message");
+    logCaptureRule.logged(allOf(aLog().withLevel(equalTo(INFO)).withMessage(equalTo("first message")),
+        aLog().withLevel(equalTo(DEBUG)).withMessage(equalTo("second message"))));
+  }
 
   @Test
   public void verify_sync_logs_using_rule() {
@@ -34,7 +53,7 @@ public class LogCaptureRuleShould {
     logNotInRoot.info("a message");
 
     assertThatExceptionOfType(VerificationException.class)
-      .isThrownBy(() -> logCaptureRule.logged(aLog().info().withMessage("a message")));
+        .isThrownBy(() -> logCaptureRule.logged(aLog().info().withMessage("a message")));
 
     logCaptureRuleAttached.logged(aLog().info().withMessage("a message"));
   }
