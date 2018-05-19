@@ -64,10 +64,7 @@ public class VerificationExceptionShould {
   }
 
   private LoggingEvent aLoggingEventWith(Level level, String message) {
-    Logger log = (Logger) LoggerFactory.getLogger(getClass());
-    LoggingEvent loggingEvent = new LoggingEvent("fqcn", log, level, message, null, null);
-    loggingEvent.setMDCPropertyMap(emptyMap());
-    return loggingEvent;
+    return aLoggingEventWith(level, message, emptyMap());
   }
 
   private LoggingEvent aLoggingEventWith(Level level, String message, Map<String, String> mdcKeys) {
