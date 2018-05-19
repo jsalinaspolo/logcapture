@@ -30,7 +30,7 @@ public class VerificationExceptionShould {
 
     VerificationException verificationException = VerificationException.forUnmatchedLog(expectedLogMessage, logEvents);
 
-    assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected at least one log matching: \n" +
+    assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected matching: \n" +
       "ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=[\"a log message\"], expectedMdc={}}\n" +
       "Logs received: \n" +
       "level: INFO marker: null mdc: {} message: a different message\n" +
@@ -56,7 +56,7 @@ public class VerificationExceptionShould {
 
     VerificationException verificationException = VerificationException.forUnmatchedLog(expectedLogMessage, logEvents);
 
-    assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected at least one log matching: \n" +
+    assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected matching: \n" +
       "ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=[\"a log message\"], expectedMdc={anotherKey=\"anotherValue\", aKey=\"aValue\"}}\n" +
       "Logs received: \n" +
       "level: INFO marker: null mdc: {anotherKey=anotherValue, aKey=aValue} message: a different message\n" +

@@ -3,6 +3,7 @@ package com.logcapture;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.logcapture.assertion.ExpectedLoggingMessage;
 import com.logcapture.assertion.VerificationException;
+import org.hamcrest.Matcher;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -18,11 +19,9 @@ public class LogCapture<T> {
     this.result = result;
   }
 
-  public LogCapture<T> logged(ExpectedLoggingMessage expectedLoggingMessage) {
-    for (ILoggingEvent event : events) {
-      if (expectedLoggingMessage.matches(event)) {
+  public LogCapture<T> logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
+      if (expectedLoggingMessage.matches(events)) {
         return this;
-      }
     }
 
     throw VerificationException.forUnmatchedLog(expectedLoggingMessage, events);
