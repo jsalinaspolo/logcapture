@@ -14,7 +14,7 @@ plugins {
 }
 
 group 'com.jspcore'
-version '0.4.3-SNAPSHOT'
+version '0.4.4-SNAPSHOT'
 description = 'A testing library for assert logging messages.'
 
 apply plugin: 'idea'
@@ -82,13 +82,17 @@ task sourceJar(type: Jar) {
   from sourceSets.main.allJava
 }
 
+task wrapper(type: Wrapper) {
+  gradleVersion = '4.7'
+}
+
 publishing {
   publications {
     MyPublication(MavenPublication) {
       from components.java
       groupId 'com.jspcore'
       artifactId 'logcapture'
-      version '0.4.3'
+      version '0.4.4'
 
       artifacts {
         artifact sourceJar {
@@ -122,8 +126,8 @@ bintray {
     licenses = ['MIT']
     vcsUrl = 'https://github.com/mustaine/logcapture.git'
     version {
-      name = '0.4.3'
-      vcsTag = '0.4.3'
+      name = '0.4.4'
+      vcsTag = '0.4.4'
       released = new Date()
     }
   }
