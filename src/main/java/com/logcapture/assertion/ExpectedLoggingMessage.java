@@ -3,7 +3,9 @@ package com.logcapture.assertion;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.logcapture.matcher.TypedAnythingMatcher;
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
@@ -22,7 +24,7 @@ import static ch.qos.logback.classic.Level.WARN;
 import static java.util.Collections.singleton;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ExpectedLoggingMessage {
+public class ExpectedLoggingMessage extends TypeSafeMatcher<List<ILoggingEvent>>{
 
   private Matcher<Level> logLevelMatcher = new TypedAnythingMatcher<>();
   private Matcher<Marker> markerMatcher = new TypedAnythingMatcher<>();
@@ -47,6 +49,21 @@ public class ExpectedLoggingMessage {
   public ExpectedLoggingMessage withMarker(Matcher<Marker> marker) {
     markerMatcher = marker;
     return this;
+  }
+
+  @Override
+  protected boolean matchesSafely(List<ILoggingEvent> events) {
+    return events.stream().anyMatch(this::matches);
+  }
+
+  private boolean matches(ILoggingEvent event) {
+    return logLevelMatcher.matches(event.getLevel()) &&
+      markerMatcher.matches(event.getMarker()) &&
+      expectedMessageMatcher.stream().allMatch(matcher -> matcher.matches(event.getFormattedMessage())) &&
+      expectedLoggedException.matches(event) &&
+      expectedLoggerNameMatcher.matches(event.getLoggerName()) &&
+      expectedLengthMatcher.matches(event.getFormattedMessage().length()) &&
+      matchesMdc(event.getMDCPropertyMap());
   }
 
   public ExpectedLoggingMessage withMarker(Marker marker) {
@@ -75,17 +92,6 @@ public class ExpectedLoggingMessage {
   public ExpectedLoggingMessage error() {
     logLevelMatcher = equalTo(ERROR);
     return this;
-  }
-
-  public boolean matches(ILoggingEvent event) {
-    return
-      logLevelMatcher.matches(event.getLevel()) &&
-        markerMatcher.matches(event.getMarker()) &&
-        expectedMessageMatcher.stream().allMatch(matcher -> matcher.matches(event.getFormattedMessage())) &&
-        expectedLoggedException.matches(event) &&
-        expectedLoggerNameMatcher.matches(event.getLoggerName()) &&
-        expectedLengthMatcher.matches(event.getFormattedMessage().length()) &&
-        matchesMdc(event.getMDCPropertyMap());
   }
 
   private boolean matchesMdc(Map<String, String> mdcPropertyMap) {
@@ -159,5 +165,10 @@ public class ExpectedLoggingMessage {
       description.add(fieldName + "=" + field);
     }
     return description;
+  }
+
+  @Override
+  public void describeTo(Description description) {
+    description.appendText(description());
   }
 }
