@@ -18,7 +18,7 @@ version '0.4.5-SNAPSHOT'
 description = 'A testing library for assert logging messages.'
 
 apply plugin: 'idea'
-apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
@@ -39,7 +39,8 @@ dependencies {
   compile "com.jayway.awaitility:awaitility:1.7.0"
   compile "junit:junit:4.12"
   compile "org.junit.jupiter:junit-jupiter-api:$junit5_version"
-
+  compile 'org.spockframework:spock-core:1.1-groovy-2.4'
+  
   testCompile "org.assertj:assertj-core:3.6.1"
   testRuntime "org.junit.jupiter:junit-jupiter-engine:$junit5_version"
   testCompile "org.junit.jupiter:junit-jupiter-params:$junit5_version"
