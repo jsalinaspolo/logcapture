@@ -24,7 +24,7 @@ import static ch.qos.logback.classic.Level.WARN;
 import static java.util.Collections.singleton;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ExpectedLoggingMessage extends TypeSafeMatcher<List<ILoggingEvent>>{
+public class ExpectedLoggingMessage extends TypeSafeMatcher<List<ILoggingEvent>> {
 
   private Matcher<Level> logLevelMatcher = new TypedAnythingMatcher<>();
   private Matcher<Marker> markerMatcher = new TypedAnythingMatcher<>();
@@ -46,6 +46,10 @@ public class ExpectedLoggingMessage extends TypeSafeMatcher<List<ILoggingEvent>>
     return this;
   }
 
+  public ExpectedLoggingMessage withLevel(Level errorLevel) {
+    return withLevel(equalTo(errorLevel));
+  }
+
   public ExpectedLoggingMessage withMarker(Matcher<Marker> marker) {
     markerMatcher = marker;
     return this;
@@ -58,12 +62,12 @@ public class ExpectedLoggingMessage extends TypeSafeMatcher<List<ILoggingEvent>>
 
   private boolean matches(ILoggingEvent event) {
     return logLevelMatcher.matches(event.getLevel()) &&
-      markerMatcher.matches(event.getMarker()) &&
-      expectedMessageMatcher.stream().allMatch(matcher -> matcher.matches(event.getFormattedMessage())) &&
-      expectedLoggedException.matches(event) &&
-      expectedLoggerNameMatcher.matches(event.getLoggerName()) &&
-      expectedLengthMatcher.matches(event.getFormattedMessage().length()) &&
-      matchesMdc(event.getMDCPropertyMap());
+        markerMatcher.matches(event.getMarker()) &&
+        expectedMessageMatcher.stream().allMatch(matcher -> matcher.matches(event.getFormattedMessage())) &&
+        expectedLoggedException.matches(event) &&
+        expectedLoggerNameMatcher.matches(event.getLoggerName()) &&
+        expectedLengthMatcher.matches(event.getFormattedMessage().length()) &&
+        matchesMdc(event.getMDCPropertyMap());
   }
 
   public ExpectedLoggingMessage withMarker(Marker marker) {
@@ -96,7 +100,7 @@ public class ExpectedLoggingMessage extends TypeSafeMatcher<List<ILoggingEvent>>
 
   private boolean matchesMdc(Map<String, String> mdcPropertyMap) {
     return mdcMatcher.entrySet().stream()
-      .allMatch(entry -> entry.getValue().matches(mdcPropertyMap.get(entry.getKey())));
+        .allMatch(entry -> entry.getValue().matches(mdcPropertyMap.get(entry.getKey())));
   }
 
   public final ExpectedLoggingMessage withMessage(Matcher<String> expectedMessages) {
