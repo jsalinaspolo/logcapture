@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
-import static com.jayway.awaitility.Awaitility.await;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
 class LogbackInterceptor {

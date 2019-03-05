@@ -1,6 +1,7 @@
 package com.logcapture.spock
 
 import com.logcapture.junit.LogCaptureRuleShould
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Shared
 
@@ -13,7 +14,7 @@ import static org.hamcrest.Matchers.not
 
 class LogCaptureSpecShould extends LogCaptureSpec {
 
-  @Shared log = LoggerFactory.getLogger(LogCaptureRuleShould.class)
+  @Shared Logger log = LoggerFactory.getLogger(LogCaptureRuleShould.class)
 
   def "verify missing events"() {
     expect:
