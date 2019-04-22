@@ -1,5 +1,13 @@
 language: java
-jdk: oraclejdk8
+cache:
+  directories:
+    - $HOME/.gradle
+jdk:
+  - openjdk12
+  - openjdk11
+  - openjdk10
+  - oraclejdk9
+  - oraclejdk8
 script:
   - ./gradlew check
 #  - ./gradlew codeCoverageReport
