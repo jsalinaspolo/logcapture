@@ -1,4 +1,4 @@
-package com.logcapture.junit
+package com.logcapture.spock
 
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.spi.ILoggingEvent
@@ -28,7 +28,7 @@ trait LogCaptureTrait {
   }
 
   LogCaptureTrait logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
-    new LogCapture<>(logAppender.events(), null).logged(expectedLoggingMessage)
+    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage)
     return this
   }
 }

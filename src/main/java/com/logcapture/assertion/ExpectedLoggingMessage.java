@@ -136,6 +136,11 @@ public class ExpectedLoggingMessage extends TypeSafeMatcher<List<ILoggingEvent>>
     return this;
   }
 
+  public ExpectedLoggingMessage withMdc(String mdcKey, String mdcValue) {
+    withMdc(mdcKey, equalTo(mdcValue));
+    return this;
+  }
+
   public ExpectedLoggingMessage withMdc(String mdcKey, Matcher<String> mdcValue) {
     mdcMatcher.put(mdcKey, mdcValue);
     return this;

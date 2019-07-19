@@ -31,7 +31,7 @@ class LogCaptureSpec extends Specification {
   }
 
   LogCaptureSpec logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
-    new LogCapture<>(logAppender.events(), null).logged(expectedLoggingMessage)
+    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage)
     return this
   }
 }

@@ -5,6 +5,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.slf4j.MarkerFactory;
 
 import static ch.qos.logback.classic.Level.DEBUG;
 import static ch.qos.logback.classic.Level.INFO;
@@ -35,8 +37,10 @@ public class LogCaptureRuleShould {
   public void verify_multiple_events() {
     log.info("first message");
     log.debug("second message");
-    logCaptureRule.logged(allOf(aLog().withLevel(equalTo(INFO)).withMessage(equalTo("first message")),
-        aLog().withLevel(equalTo(DEBUG)).withMessage(equalTo("second message"))));
+    logCaptureRule.logged(allOf(
+        aLog().withLevel(equalTo(INFO)).withMessage(equalTo("first message")),
+        aLog().withLevel(equalTo(DEBUG)).withMessage(equalTo("second message"))
+    ));
   }
 
   @Test
@@ -44,6 +48,15 @@ public class LogCaptureRuleShould {
     log.info("a message");
 
     logCaptureRule.logged(aLog().info().withMessage("a message"));
+  }
+
+  @Test
+  public void verify_captured_events_with_marker() {
+    log.info(MarkerFactory.getMarker("a_marker"), "a message");
+    logCaptureRule.logged(aLog()
+        .withLevel(equalTo(INFO))
+        .withMarker("a_marker")
+        .withMessage(equalTo("a message")));
   }
 
   @Test
@@ -56,6 +69,18 @@ public class LogCaptureRuleShould {
         .isThrownBy(() -> logCaptureRule.logged(aLog().info().withMessage("a message")));
 
     logCaptureRuleAttached.logged(aLog().info().withMessage("a message"));
+  }
+
+  @Test
+  public void verify_log_with_mdc_keys() {
+    MDC.put("a-key", "a-value");
+    log.info("a message");
+
+    logCaptureRule.logged(aLog()
+        .info()
+        .withMdc("a-key", "a-value")
+        .withMessage("a message"));
+
   }
 
   private Logger createLogger(String name) {

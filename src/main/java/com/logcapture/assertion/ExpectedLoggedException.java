@@ -27,7 +27,7 @@ public class ExpectedLoggedException {
     }
 
     return expectedMessageMatcher.matches(event.getThrowableProxy().getMessage()) &&
-      expectedException.matches(event.getThrowableProxy());
+        expectedException.matches(event.getThrowableProxy());
   }
 
   public ExpectedLoggedException withMessage(Matcher<String> expectedMessageMatcher) {
@@ -38,9 +38,9 @@ public class ExpectedLoggedException {
   @Override
   public String toString() {
     return "ExpectedLoggedException{" +
-      "expectedMessageMatcher=" + expectedMessageMatcher +
-      ", expectedException=" + expectedException +
-      '}';
+        "expectedMessageMatcher=" + expectedMessageMatcher +
+        ", expectedException=" + expectedException +
+        '}';
   }
 
   public static final ExpectedLoggedException ANYTHING = new ExpectedLoggedException() {

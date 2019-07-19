@@ -42,7 +42,7 @@ public class LogCaptureExtension implements BeforeEachCallback, AfterEachCallbac
   }
 
   public LogCaptureExtension logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
-    new LogCapture<>(logAppender.events(), null).logged(expectedLoggingMessage);
+    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage);
     return this;
   }
 
