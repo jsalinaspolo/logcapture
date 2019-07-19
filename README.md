@@ -8,18 +8,18 @@ LogCapture is a testing library for asserting logging messages.
  
 ## How it works
 
-```
+
 Using JUnit Rule:
 
 ```java
 @Rule
-public LogCaptureRule logCapture = new LogCaptureRule();
+public LogCaptureRule logCaptureRule = new LogCaptureRule();
 
 @Test
 public void verify_logs_using_rule() {
   log.info("a message");
 
-  logCapture.logged(aLog().info().withMessage("a message"));
+  logCaptureRule.logged(aLog().info().withMessage("a message"));
 }
 ```
 
