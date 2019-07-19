@@ -1,7 +1,6 @@
 package com.logcapture.spock
 
 import com.logcapture.junit.LogCaptureRuleShould
-import com.logcapture.junit.LogCaptureTrait
 import org.slf4j.LoggerFactory
 import spock.lang.Shared
 import spock.lang.Specification

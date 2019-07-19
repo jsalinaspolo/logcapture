@@ -15,7 +15,6 @@ import java.util.Map;
 import static com.logcapture.assertion.ExpectedLoggingMessage.aLog;
 import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 
 public class VerificationExceptionShould {
@@ -24,17 +23,17 @@ public class VerificationExceptionShould {
   public void containLogsEventsNotMatchingExpected() {
     ExpectedLoggingMessage expectedLogMessage = aLog().info().withMessage("a log message");
     List<ILoggingEvent> logEvents = Arrays.asList(
-      aLoggingEventWith(Level.INFO, "a different message"),
-      aLoggingEventWith(Level.INFO, "another different message")
+        aLoggingEventWith(Level.INFO, "a different message"),
+        aLoggingEventWith(Level.INFO, "another different message")
     );
 
     VerificationException verificationException = VerificationException.forUnmatchedLog(expectedLogMessage, logEvents);
 
     assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected matching: \n" +
-      "ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=[\"a log message\"], expectedMdc={}}\n" +
-      "Logs received: \n" +
-      "level: INFO marker: null mdc: {} message: a different message\n" +
-      "level: INFO marker: null mdc: {} message: another different message");
+        "ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=[\"a log message\"], expectedMdc={}}\n" +
+        "Logs received: \n" +
+        "level: INFO marker: null mdc: {} message: a different message\n" +
+        "level: INFO marker: null mdc: {} message: another different message");
   }
 
   @Test
@@ -45,22 +44,22 @@ public class VerificationExceptionShould {
     }};
 
     ExpectedLoggingMessage expectedLogMessage = aLog().info()
-      .withMessage("a log message")
-      .withMdc("aKey", equalTo("aValue"))
-      .withMdc("anotherKey", equalTo("anotherValue"));
+        .withMessage("a log message")
+        .withMdc("aKey", equalTo("aValue"))
+        .withMdc("anotherKey", equalTo("anotherValue"));
 
     List<ILoggingEvent> logEvents = Arrays.asList(
-      aLoggingEventWith(Level.INFO, "a different message", mdcKeys),
-      aLoggingEventWith(Level.INFO, "another different message", mdcKeys)
+        aLoggingEventWith(Level.INFO, "a different message", mdcKeys),
+        aLoggingEventWith(Level.INFO, "another different message", mdcKeys)
     );
 
     VerificationException verificationException = VerificationException.forUnmatchedLog(expectedLogMessage, logEvents);
 
     assertThat(verificationException.toString()).isEqualTo("com.logcapture.assertion.VerificationException: Expected matching: \n" +
-      "ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=[\"a log message\"], expectedMdc={anotherKey=\"anotherValue\", aKey=\"aValue\"}}\n" +
-      "Logs received: \n" +
-      "level: INFO marker: null mdc: {anotherKey=anotherValue, aKey=aValue} message: a different message\n" +
-      "level: INFO marker: null mdc: {anotherKey=anotherValue, aKey=aValue} message: another different message");
+        "ExpectedLoggingMessage{logLevelMatcher=<INFO>, expectedMessageMatcher=[\"a log message\"], expectedMdc={anotherKey=\"anotherValue\", aKey=\"aValue\"}}\n" +
+        "Logs received: \n" +
+        "level: INFO marker: null mdc: {anotherKey=anotherValue, aKey=aValue} message: a different message\n" +
+        "level: INFO marker: null mdc: {anotherKey=anotherValue, aKey=aValue} message: another different message");
   }
 
   private LoggingEvent aLoggingEventWith(Level level, String message) {
