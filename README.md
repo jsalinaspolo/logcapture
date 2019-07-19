@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/mustaine/logcapture.svg?branch=master)](https://travis-ci.org/mustaine/logcapture)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jspcore/logcapture/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jspcore/logcapture)
+[![Download](https://api.bintray.com/packages/jspcore/maven/logcapture/images/download.svg?version=0.5.0) ](https://bintray.com/jspcore/maven/logcapture/0.5.0/link)
 [![codecov](https://codecov.io/gh/mustaine/logcapture/branch/master/graph/badge.svg)](https://codecov.io/gh/mustaine/logcapture)
 
 # LogCapture
@@ -43,7 +43,13 @@ More example how to use the library at [ExampleShould.java](https://github.com/m
 
 Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.jspcore%22%20AND%20a%3A%22logcapture%22).
 
-Example for Maven:
+Gradle
+
+```
+testImplementation 'com.jspcore:logcapture:x.y.z'
+```
+
+Maven:
 
 ```xml
 <dependency>
