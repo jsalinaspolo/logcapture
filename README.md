@@ -23,6 +23,20 @@ public void verify_logs_using_rule() {
 }
 ```
 
+Using Spock:
+
+```groovy
+class LogCaptureSpecShould extends LogCaptureSpec {
+
+  @Shared log = LoggerFactory.getLogger(getClass())
+
+  def "verify log message"() {
+    expect:
+    logged(aLog().info().withMessage("missing message"))
+  }
+}
+```
+
 More example how to use the library at [ExampleShould.java](https://github.com/mustaine/logcapture/blob/master/src/test/java/com/logcapture/example/ExampleShould.java) 
 
 ## Binaries
