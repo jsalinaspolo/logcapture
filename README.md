@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/mustaine/logcapture.svg?branch=master)](https://travis-ci.org/mustaine/logcapture)
-[![Download](https://api.bintray.com/packages/jspcore/maven/logcapture/images/download.svg?version=0.5.0) ](https://bintray.com/jspcore/maven/logcapture/0.5.0/link)
+[![Download](https://api.bintray.com/packages/jspcore/maven/logcapture/images/download.svg?version=0.5.1) ](https://bintray.com/jspcore/maven/logcapture/0.5.1/link)
 [![codecov](https://codecov.io/gh/mustaine/logcapture/branch/master/graph/badge.svg)](https://codecov.io/gh/mustaine/logcapture)
 
 # LogCapture
