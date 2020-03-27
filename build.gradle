@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.jspcore'
-version '0.5.1-SNAPSHOT'
+version '1.0.0-SNAPSHOT'
 description = 'A testing library for assert logging messages.'
 
 repositories {
@@ -48,7 +48,7 @@ subprojects {
         from components.java
         groupId 'com.jspcore'
         artifactId 'logcapture'
-        version '0.5.1'
+        version '1.0.0'
 
         pom.withXml {
           def root = asNode()
@@ -98,8 +98,8 @@ bintray {
     licenses = ['MIT']
     vcsUrl = 'https://github.com/mustaine/logcapture.git'
     version {
-      name = '0.5.1'
-      vcsTag = '0.5.1'
+      name = '1.0.0'
+      vcsTag = '1.0.0'
       released = new Date()
     }
   }
