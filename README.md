@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mustaine/logcapture.svg?branch=master)](https://travis-ci.org/mustaine/logcapture)
+[![Build Status](https://travis-ci.org/jsalinaspolo/logcapture.svg?branch=master)](https://travis-ci.org/jsalinaspolo/logcapture)
 [![Download](https://api.bintray.com/packages/jspcore/maven/logcapture-core/images/download.svg?version=1.0.0) ](https://bintray.com/jspcore/maven/logcapture-core/1.0.0/link)
 [![codecov](https://codecov.io/gh/mustaine/logcapture/branch/master/graph/badge.svg)](https://codecov.io/gh/mustaine/logcapture)
 
