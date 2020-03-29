@@ -32,32 +32,62 @@ class LogCaptureSpecShould extends LogCaptureSpec {
 
   def "verify log message"() {
     expect:
-    logged(aLog().info().withMessage("missing message"))
+    log.info("a message");
+
+    logged(aLog().info().withMessage("a message"))
   }
 }
+```
+
+Using Kotest:
+
+```kotlin
+class LogCaptureListenerSpec : StringSpec({
+
+  listener(LogCaptureListener)  // Add LogCaptureListener
+
+  val log: Logger = LoggerFactory.getLogger(LogCaptureListenerSpec::class.java)
+
+  "verify log messages" {
+    log.info("a message")
+
+    logged(aLog().info().withMessage("a message"))
+  }
+})
 ```
 
 More example how to use the library at [ExampleShould.java](https://github.com/mustaine/logcapture/blob/master/src/test/java/com/logcapture/example/ExampleShould.java) 
 
 ## Binaries
 
-Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.jspcore%22%20AND%20a%3A%22logcapture%22).
+Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.logcapture%22%20AND%20a%3A%22logcapture%22).
 
 Gradle
 
 ```
-testImplementation 'com.jspcore:logcapture:x.y.z'
+testImplementation 'com.logcapture:logcapture-core:x.y.z'
 ```
+
+add one of the test library dependency 
+
+```
+testImplementation 'com.logcapture:logcapture-junit4:x.y.z'
+testImplementation 'com.logcapture:logcapture-junit5:x.y.z'
+testImplementation 'com.logcapture:logcapture-spock:x.y.z'
+testImplementation 'com.logcapture:logcapture-kotest:x.y.z'
+```
+
 
 Maven:
 
 ```xml
 <dependency>
-    <groupId>com.jspcore</groupId>
-    <artifactId>logcapture</artifactId>
+    <groupId>com.logcapture</groupId>
+    <artifactId>logcapture-core</artifactId>
     <version>x.y.z</version>
 </dependency>
 ```
+
 
 ## Why LogCapture?
 
