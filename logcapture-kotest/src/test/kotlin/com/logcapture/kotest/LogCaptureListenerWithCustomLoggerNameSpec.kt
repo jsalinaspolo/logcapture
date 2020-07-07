@@ -2,19 +2,21 @@ package com.logcapture.kotest
 
 import com.logcapture.assertion.ExpectedLoggingMessage.aLog
 import io.kotest.core.spec.style.StringSpec
+import org.hamcrest.Matchers.equalTo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-class LogCaptureListenerSpec : StringSpec({
+class LogCaptureListenerWithCustomLoggerNameSpec : StringSpec({
 
-  val log: Logger = LoggerFactory.getLogger(LogCaptureListenerSpec::class.java)
+  val log: Logger = LoggerFactory.getLogger("CUSTOM-LOGGER")
 
-  val logCaptureListener = LogCaptureListener()
+  val logCaptureListener = LogCaptureListener("CUSTOM-LOGGER")
   listener(logCaptureListener)
 
   "verify log messages" {
     log.info("a message")
 
+    logCaptureListener.logged(aLog().info().withLoggerName(equalTo("CUSTOM-LOGGER")))
     logCaptureListener.logged(aLog().info().withMessage("a message"))
   }
 })
