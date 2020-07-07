@@ -11,14 +11,14 @@ import org.hamcrest.Matcher
 import org.slf4j.Logger.ROOT_LOGGER_NAME
 import org.slf4j.LoggerFactory
 
-object LogCaptureListener : TestListener {
+class LogCaptureListener(private val loggerName: String = ROOT_LOGGER_NAME) : TestListener {
 
   private lateinit var logAppender: StubAppender
   private lateinit var root: Logger
 
   override suspend fun beforeTest(testCase: TestCase) {
     logAppender = StubAppender()
-    root = LoggerFactory.getLogger(ROOT_LOGGER_NAME) as Logger
+    root = LoggerFactory.getLogger(loggerName) as Logger
     root.addAppender(logAppender)
   }
 
