@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.logcapture'
-version '1.0.0'
+version '1.1.0'
 description = 'A testing library for assert logging messages.'
 
 repositories {
@@ -73,7 +73,7 @@ subprojects {
         from components.java
         groupId 'com.logcapture'
         artifactId project.name
-        version "1.0.0"
+        version "1.1.0"
 
         pom.withXml {
           def root = asNode()
@@ -99,8 +99,8 @@ subprojects {
       licenses = ['MIT']
       vcsUrl = 'https://github.com/jsalinaspolo/logcapture.git'
       version {
-        name = "1.0.0"
-        vcsTag = "1.0.0"
+        name = "1.1.0"
+        vcsTag = "1.1.0"
         released = new Date()
       }
     }
@@ -108,7 +108,7 @@ subprojects {
 }
 
 wrapper {
-  gradleVersion = '6.3'
+  gradleVersion = '6.6.1'
   distributionType = Wrapper.DistributionType.ALL
 }
 
