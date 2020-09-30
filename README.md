@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/jsalinaspolo/logcapture.svg?branch=master)](https://travis-ci.org/jsalinaspolo/logcapture)
 [![Download](https://api.bintray.com/packages/jspcore/maven/logcapture-core/images/download.svg?version=1.2.0) ](https://bintray.com/jspcore/maven/logcapture-core/1.2.0/link)
-[![codecov](https://codecov.io/gh/mustaine/logcapture/branch/master/graph/badge.svg)](https://codecov.io/gh/mustaine/logcapture)
+[![codecov](https://codecov.io/gh/jsalinaspolo/logcapture/branch/master/graph/badge.svg)](https://codecov.io/gh/jsalinaspolo/logcapture)
 
 # LogCapture
 
@@ -56,7 +56,7 @@ class LogCaptureListenerSpec : StringSpec({
 })
 ```
 
-More example how to use the library at [ExampleShould.java](https://github.com/mustaine/logcapture/blob/master/src/test/java/com/logcapture/example/ExampleShould.java) 
+More example how to use the library at [ExampleShould.java](https://github.com/jsalinaspolo/logcapture/blob/master/src/test/java/com/logcapture/example/ExampleShould.java) 
 
 ## Binaries
 
