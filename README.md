@@ -23,6 +23,20 @@ public void verify_logs_using_rule() {
 }
 ```
 
+Using JUnit 5 Extension:
+
+```java
+@RegisterExtension
+public LogCaptureExtension logCaptureExtension = new LogCaptureExtension();
+
+@Test
+public void verify_logs_using_extension() {
+  log.info("a message");
+
+  logCaptureExtension.logged(aLog().info().withMessage("a message"));
+}
+```
+
 Using Spock:
 
 ```groovy
