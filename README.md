@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/jsalinaspolo/logcapture.svg?branch=master)](https://travis-ci.org/jsalinaspolo/logcapture)
-[![Download](https://api.bintray.com/packages/jspcore/maven/logcapture-core/images/download.svg?version=1.2.0) ](https://bintray.com/jspcore/maven/logcapture-core/1.2.0/link)
+[![Download](https://api.bintray.com/packages/jspcore/maven/logcapture-core/images/download.svg?version=1.2.1) ](https://bintray.com/jspcore/maven/logcapture-core/1.2.1/link)
 [![codecov](https://codecov.io/gh/jsalinaspolo/logcapture/branch/master/graph/badge.svg)](https://codecov.io/gh/jsalinaspolo/logcapture)
 
 # LogCapture
