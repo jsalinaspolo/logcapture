@@ -1,12 +1,12 @@
 plugins {
-  id 'org.jetbrains.kotlin.jvm' version '1.4.20'
+  id 'org.jetbrains.kotlin.jvm' version '1.4.21'
 }
 
 dependencies {
   compile project(":logcapture-core")
 
-  implementation 'io.kotest:kotest-runner-junit5-jvm:4.3.1'
-  implementation 'io.kotest:kotest-assertions-core-jvm:4.3.1'
+  implementation 'io.kotest:kotest-runner-junit5-jvm:4.3.2'
+  implementation 'io.kotest:kotest-assertions-core-jvm:4.3.2'
 }
 
 compileKotlin {
