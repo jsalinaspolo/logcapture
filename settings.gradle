@@ -3,6 +3,7 @@ include 'logcapture-core',
     'logcapture-junit4',
     'logcapture-junit5',
     'logcapture-spock',
+    'logcapture-spock2',
     'logcapture-kotest'
 
 rootProject.name = 'logcapture'

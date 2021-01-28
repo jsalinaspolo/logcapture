@@ -1,0 +1,13 @@
+plugins {
+  id 'groovy'
+}
+
+dependencies {
+  implementation project(":logcapture-core")
+
+  implementation 'org.spockframework:spock-core:2.0-M4-groovy-3.0'
+}
+
+test {
+  useJUnitPlatform()
+}

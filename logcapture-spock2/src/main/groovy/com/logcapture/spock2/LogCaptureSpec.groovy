@@ -1,4 +1,4 @@
-package com.logcapture.spock
+package com.logcapture.spock2
 
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.spi.ILoggingEvent
