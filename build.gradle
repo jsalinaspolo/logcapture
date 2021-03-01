@@ -1,5 +1,5 @@
 group 'org.logcapture'
-version '1.2.1'
+version '1.2.2'
 description = 'A testing library for assert logging messages.'
 
 repositories {
@@ -8,7 +8,7 @@ repositories {
 
 subprojects {
   apply plugin: 'idea'
-  apply plugin: 'maven'
+  apply plugin: 'signing'
   apply plugin: 'maven-publish'
   apply plugin: 'java-library'
   apply plugin: "jacoco"
@@ -40,7 +40,7 @@ subprojects {
 
   def pomConfig = {
     name project.name
-    description project.description
+    description 'A testing library for assert logging messages.'
     url "http://www.jspcore.com/"
 
     licenses {
@@ -51,34 +51,49 @@ subprojects {
       }
     }
     scm {
-      connection "scm:https://mustaine@github.com/mustaine/logcapture.git"
-      developerConnection "scm:git@github.com:mustaine/logcapture.git"
-      url "https://github.com/mustaine/logcapture"
+      connection "scm:https://jsalinaspolo@github.com/jsalinaspolo/logcapture.git"
+      developerConnection "scm:git@github.com:jsalinaspolo/logcapture.git"
+      url "https://github.com/jsalinaspolo/logcapture"
     }
     developers {
       developer {
-        id "jspcore"
+        id "jsalinaspolo"
         name "Team JSPCore"
       }
     }
   }
 
   publishing {
+    repositories {
+      maven {
+        name = "OSSRH"
+        url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        credentials {
+          username = System.getenv("MAVEN_USERNAME")
+          password = System.getenv("MAVEN_PASSWORD")
+        }
+      }
+    }
     publications {
       MyPublication(MavenPublication) {
         from components.java
         groupId 'org.logcapture'
         artifactId project.name
-        version "1.2.1"
+        version "1.2.2"
 
         pom.withXml {
           def root = asNode()
-          asNode().appendNode('description', project.description)
+          root.appendNode('description', 'A testing library for assert logging messages.')
           root.children().last() + pomConfig
         }
       }
     }
   }
+
+  signing {
+    sign publishing.publications.MyPublication
+  }
+
 }
 
 wrapper {
