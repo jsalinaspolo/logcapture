@@ -3,7 +3,8 @@ include 'logcapture-core',
     'logcapture-junit5',
     'logcapture-spock',
     'logcapture-spock2',
-    'logcapture-kotest'
+    'logcapture-kotest',
+    'logcapture-example'
 
 rootProject.name = 'logcapture'
 rootProject.children.each { child ->

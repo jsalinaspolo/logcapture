@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/jsalinaspolo/logcapture.svg?branch=master)](https://travis-ci.org/jsalinaspolo/logcapture)
-[![Download](https://api.bintray.com/packages/jspcore/maven/logcapture-core/images/download.svg?version=1.2.1) ](https://bintray.com/jspcore/maven/logcapture-core/1.2.1/link)
+[![Sonatype Nexus](https://img.shields.io/nexus/r/org.logcapture/logcapture-core?server=https%3A%2F%2Fs01.oss.sonatype.org)](https://repo1.maven.org/maven2/org/logcapture/)
 [![codecov](https://codecov.io/gh/jsalinaspolo/logcapture/branch/master/graph/badge.svg)](https://codecov.io/gh/jsalinaspolo/logcapture)
 [![Known Vulnerabilities](https://snyk.io/test/github/jsalinaspolo/logcapture/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/jsalinaspolo/logcapture?targetFile=build.gradle)
 
@@ -75,21 +75,21 @@ More example how to use the library at [ExampleShould.java](https://github.com/j
 
 ## Binaries
 
-Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.logcapture%22%20AND%20a%3A%22logcapture%22).
+Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.logcapture%22%20AND%20a%3A%22logcapture%22).
 
 Gradle
 
 ```
-testImplementation 'com.logcapture:logcapture-core:x.y.z'
+testImplementation 'org.logcapture:logcapture-core:x.y.z'
 ```
 
 add one of the test library dependency 
 
 ```
-testImplementation 'com.logcapture:logcapture-junit4:x.y.z'
-testImplementation 'com.logcapture:logcapture-junit5:x.y.z'
-testImplementation 'com.logcapture:logcapture-spock:x.y.z'
-testImplementation 'com.logcapture:logcapture-kotest:x.y.z'
+testImplementation 'org.logcapture:logcapture-junit4:x.y.z'
+testImplementation 'org.logcapture:logcapture-junit5:x.y.z'
+testImplementation 'org.logcapture:logcapture-spock:x.y.z'
+testImplementation 'org.logcapture:logcapture-kotest:x.y.z'
 ```
 
 
@@ -97,7 +97,7 @@ Maven:
 
 ```xml
 <dependency>
-    <groupId>com.logcapture</groupId>
+    <groupId>org.logcapture</groupId>
     <artifactId>logcapture-core</artifactId>
     <version>x.y.z</version>
 </dependency>
