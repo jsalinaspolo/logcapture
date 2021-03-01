@@ -1,4 +1,3 @@
-
 include 'logcapture-core',
     'logcapture-junit4',
     'logcapture-junit5',
@@ -11,3 +10,4 @@ rootProject.children.each { child ->
   child.name = child.name - ~/.*\\//
   child.buildFileName = "${child.name}.gradle"
 }
+

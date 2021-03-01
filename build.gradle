@@ -1,13 +1,9 @@
-plugins {
-  id "com.jfrog.bintray" version "1.8.4" apply false
-}
-
 group 'com.logcapture'
 version '1.2.1'
 description = 'A testing library for assert logging messages.'
 
 repositories {
-  jcenter()
+  mavenCentral()
 }
 
 subprojects {
@@ -18,7 +14,7 @@ subprojects {
   apply plugin: "jacoco"
 
   repositories {
-    jcenter()
+    mavenCentral()
   }
 
   test {
@@ -83,32 +79,10 @@ subprojects {
       }
     }
   }
-
-  apply plugin: 'com.jfrog.bintray'
-
-  bintray {
-//  dryRun = true
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-
-    publications = ['MyPublication']
-    pkg {
-      repo = 'maven'
-      name = project.name
-      userOrg = 'jspcore'
-      licenses = ['MIT']
-      vcsUrl = 'https://github.com/jsalinaspolo/logcapture.git'
-      version {
-        name = "1.2.1"
-        vcsTag = "1.2.1"
-        released = new Date()
-      }
-    }
-  }
 }
 
 wrapper {
-  gradleVersion = '6.7'
+  gradleVersion = '6.8.3'
   distributionType = Wrapper.DistributionType.ALL
 }
 
