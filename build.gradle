@@ -1,4 +1,4 @@
-group 'com.logcapture'
+group 'org.logcapture'
 version '1.2.1'
 description = 'A testing library for assert logging messages.'
 
@@ -67,7 +67,7 @@ subprojects {
     publications {
       MyPublication(MavenPublication) {
         from components.java
-        groupId 'com.logcapture'
+        groupId 'org.logcapture'
         artifactId project.name
         version "1.2.1"
 
