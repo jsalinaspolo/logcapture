@@ -75,7 +75,7 @@ More example how to use the library at [ExampleShould.java](https://github.com/j
 
 ## Binaries
 
-Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.logcapture%22%20AND%20a%3A%22logcapture%22).
+Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.logcapture).
 
 Gradle
 
