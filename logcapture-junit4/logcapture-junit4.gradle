@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
   implementation project(":logcapture-core")
-  implementation "junit:junit:4.12"
+  implementation "junit:junit:4.13.2"
 
   testImplementation "org.assertj:assertj-core:3.18.0"
 }

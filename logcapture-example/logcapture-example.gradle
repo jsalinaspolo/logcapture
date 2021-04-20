@@ -2,5 +2,5 @@
 dependencies {
   implementation "org.logcapture:logcapture-core:1.2.2"
   implementation "org.logcapture:logcapture-junit4:1.2.2"
-  implementation "junit:junit:4.12"
+  implementation "junit:junit:4.13.2"
 }

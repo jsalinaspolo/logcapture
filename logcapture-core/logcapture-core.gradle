@@ -7,6 +7,6 @@ dependencies {
   api "ch.qos.logback:logback-classic:1.2.3"
   api "org.slf4j:slf4j-api:1.7.30"
 
-  testImplementation "junit:junit:4.12"
+  testImplementation "junit:junit:4.13.2"
   testImplementation "org.assertj:assertj-core:3.15.0"
 }
