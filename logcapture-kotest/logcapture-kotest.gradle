@@ -6,7 +6,7 @@ dependencies {
   compile project(":logcapture-core")
 
   implementation 'io.kotest:kotest-runner-junit5-jvm:4.4.3'
-  implementation 'io.kotest:kotest-assertions-core-jvm:4.4.3'
+  implementation 'io.kotest:kotest-assertions-core-jvm:4.5.0'
 }
 
 compileKotlin {
