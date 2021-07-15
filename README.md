@@ -59,7 +59,7 @@ Using Kotest:
 ```kotlin
 class LogCaptureListenerSpec : StringSpec({
 
-  listener(LogCaptureListener)  // Add LogCaptureListener
+  listener(LogCaptureListener())  // Add LogCaptureListener
 
   val log: Logger = LoggerFactory.getLogger(LogCaptureListenerSpec::class.java)
 
