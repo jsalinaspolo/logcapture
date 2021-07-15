@@ -58,15 +58,15 @@ Using Kotest:
 
 ```kotlin
 class LogCaptureListenerSpec : StringSpec({
-
-  listener(LogCaptureListener())  // Add LogCaptureListener
+  val logCaptureListener = LogCaptureListener()
+  listener(logCaptureListener)  // Add LogCaptureListener
 
   val log: Logger = LoggerFactory.getLogger(LogCaptureListenerSpec::class.java)
 
   "verify log messages" {
     log.info("a message")
 
-    logged(aLog().info().withMessage("a message"))
+    logCaptureListener.logged(aLog().info().withMessage("a message"))
   }
 })
 ```
