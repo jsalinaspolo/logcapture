@@ -2,6 +2,7 @@ package org.logcapture.assertion;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import org.logcapture.matcher.TypedAnythingMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -24,7 +25,7 @@ import static ch.qos.logback.classic.Level.WARN;
 import static java.util.Collections.singleton;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ExpectedLoggingMessage extends TypeSafeMatcher<List<ILoggingEvent>> {
+public class ExpectedLoggingMessage extends TypeSafeMatcher<ListAppender<ILoggingEvent>> {
 
   private Matcher<Level> logLevelMatcher = new TypedAnythingMatcher<>();
   private Matcher<Marker> markerMatcher = new TypedAnythingMatcher<>();
@@ -56,8 +57,8 @@ public class ExpectedLoggingMessage extends TypeSafeMatcher<List<ILoggingEvent>>
   }
 
   @Override
-  protected boolean matchesSafely(List<ILoggingEvent> events) {
-    return events.stream().anyMatch(this::matches);
+  protected boolean matchesSafely(ListAppender<ILoggingEvent> events) {
+    return events.list.stream().anyMatch(this::matches);
   }
 
   private boolean matches(ILoggingEvent event) {

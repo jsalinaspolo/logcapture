@@ -13,7 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class StubAppender implements Appender<ILoggingEvent> {
   public static final String STUB_APPENDER_NAME = "stub-appender";
-  private final List<ILoggingEvent> loggedEvents = new CopyOnWriteArrayList<>();
+  private final ListAppender<ILoggingEvent> loggedEvents = new CopyOnWriteArrayList<>();
 
   @Override
   public String getName() {
