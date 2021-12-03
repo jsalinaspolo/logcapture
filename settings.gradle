@@ -7,8 +7,4 @@ include 'logcapture-core',
     'logcapture-example'
 
 rootProject.name = 'logcapture'
-rootProject.children.each { child ->
-  child.name = child.name - ~/.*\\//
-  child.buildFileName = "${child.name}.gradle"
-}
 
