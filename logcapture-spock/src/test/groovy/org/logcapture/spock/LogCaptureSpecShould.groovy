@@ -36,4 +36,12 @@ class LogCaptureSpecShould extends LogCaptureSpec {
 
     logged(aLog().info().withMessage("a message"))
   }
+
+  def "verify n times logs"() {
+    expect:
+    log.info("a message")
+    log.info("a message")
+
+    logged(aLog().info().withMessage("a message"), 2)
+  }
 }

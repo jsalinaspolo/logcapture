@@ -22,6 +22,18 @@ public class VerificationException extends AssertionError {
     ));
   }
 
+  public static VerificationException forUnmatchedTimesLog(Matcher<List<ILoggingEvent>> expectedLogMessage, List<ILoggingEvent> logEvents, Integer expectedTimes, Integer times) {
+    return new VerificationException(String.format(
+        "Expected %d times but got %d: \n%s\nLogs matched: \n%s",
+        expectedTimes,
+        times,
+        expectedLogMessage.toString(),
+        logEvents.stream()
+            .map(VerificationException::formatLogEvent)
+            .collect(Collectors.joining("\n"))
+    ));
+  }
+
   private static String formatLogEvent(ILoggingEvent log) {
     return String.format("level: %s marker: %s mdc: %s message: %s", log.getLevel(),
         log.getMarker(),

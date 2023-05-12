@@ -30,4 +30,10 @@ class LogCaptureSpec extends Specification {
     new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage)
     return this
   }
+
+  LogCaptureSpec logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage, Integer times) {
+    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage, times)
+    return this
+  }
+
 }

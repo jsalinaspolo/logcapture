@@ -80,7 +80,16 @@ public class LogCaptureRuleShould {
         .info()
         .withMdc("a-key", "a-value")
         .withMessage("a message"));
+  }
 
+  @Test
+  public void verify_log_n_times() {
+    log.info("a message");
+    log.info("a message");
+
+    logCaptureRule.logged(aLog()
+        .info()
+        .withMessage("a message"), 2);
   }
 
   private Logger createLogger(String name) {
