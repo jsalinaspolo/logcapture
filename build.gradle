@@ -93,6 +93,4 @@ subprojects {
   signing {
     sign publishing.publications.MyPublication
   }
-
 }
-
