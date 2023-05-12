@@ -1,5 +1,5 @@
 group 'org.logcapture'
-version '1.2.2'
+version '1.3.0'
 description = 'A testing library for assert logging messages.'
 
 repositories {
@@ -79,7 +79,7 @@ subprojects {
         from components.java
         groupId 'org.logcapture'
         artifactId project.name
-        version "1.2.2"
+        version "1.3.0"
 
         pom.withXml {
           def root = asNode()
