@@ -30,4 +30,8 @@ class LogCaptureListener(private val loggerName: String = ROOT_LOGGER_NAME) : Te
     LogCapture<Any>(logAppender.events()).logged(expectedLoggingMessage)
     return this
   }
+  fun logged(expectedLoggingMessage: Matcher<List<ILoggingEvent>>, times: Int): LogCaptureListener {
+    LogCapture<Any>(logAppender.events()).logged(expectedLoggingMessage, times)
+    return this
+  }
 }

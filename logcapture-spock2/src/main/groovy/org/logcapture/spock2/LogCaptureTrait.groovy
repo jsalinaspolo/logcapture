@@ -27,4 +27,10 @@ trait LogCaptureTrait {
     new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage)
     return this
   }
+
+  LogCaptureTrait logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage, Integer times) {
+    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage, times)
+    return this
+  }
+
 }

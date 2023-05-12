@@ -17,4 +17,11 @@ class LogCaptureListenerSpec : StringSpec({
 
     logCaptureListener.logged(aLog().info().withMessage("a message"))
   }
+
+  "verify log n times " {
+    log.info("a message")
+    log.info("a message")
+
+    logCaptureListener.logged(aLog().info().withMessage("a message"), 2)
+  }
 })

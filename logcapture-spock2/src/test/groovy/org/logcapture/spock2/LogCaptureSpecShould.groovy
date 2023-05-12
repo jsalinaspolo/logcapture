@@ -1,19 +1,18 @@
 package org.logcapture.spock2
 
-
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Shared
 
 import static ch.qos.logback.classic.Level.DEBUG
 import static ch.qos.logback.classic.Level.INFO
+import static org.hamcrest.Matchers.*
 import static org.logcapture.assertion.ExpectedLoggingMessage.aLog
-import static org.hamcrest.Matchers.allOf
-import static org.hamcrest.Matchers.equalTo
-import static org.hamcrest.Matchers.not
 
 class LogCaptureSpecShould extends LogCaptureSpec {
 
-  @Shared log = LoggerFactory.getLogger(getClass())
+  @Shared
+  Logger log = LoggerFactory.getLogger(getClass())
 
   def "verify missing events"() {
     expect:
@@ -36,5 +35,13 @@ class LogCaptureSpecShould extends LogCaptureSpec {
     log.info("a message")
 
     logged(aLog().info().withMessage("a message"))
+  }
+
+  def "verify n times logs"() {
+    expect:
+    log.info("a message")
+    log.info("a message")
+
+    logged(aLog().info().withMessage("a message"), 2)
   }
 }

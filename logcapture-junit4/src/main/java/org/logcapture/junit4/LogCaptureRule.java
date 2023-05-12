@@ -56,4 +56,9 @@ public class LogCaptureRule implements MethodRule, TestRule {
     new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage);
     return this;
   }
+
+  public LogCaptureRule logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage, Integer times) {
+    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage, times);
+    return this;
+  }
 }
