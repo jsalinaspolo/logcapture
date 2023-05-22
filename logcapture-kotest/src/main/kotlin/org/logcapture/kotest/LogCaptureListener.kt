@@ -26,12 +26,11 @@ class LogCaptureListener(private val loggerName: String = ROOT_LOGGER_NAME) : Te
     root.detachAppender(logAppender)
   }
 
-  fun logged(expectedLoggingMessage: Matcher<List<ILoggingEvent>>): LogCaptureListener {
-    LogCapture<Any>(logAppender.events()).logged(expectedLoggingMessage)
-    return this
+  fun logged(expectedLoggingMessage: Matcher<List<ILoggingEvent>>): LogCapture<Any> {
+    return LogCapture<Any>(logAppender.events()).logged(expectedLoggingMessage)
   }
-  fun logged(expectedLoggingMessage: Matcher<List<ILoggingEvent>>, times: Int): LogCaptureListener {
-    LogCapture<Any>(logAppender.events()).logged(expectedLoggingMessage, times)
-    return this
+
+  fun logged(expectedLoggingMessage: Matcher<List<ILoggingEvent>>, times: Int): LogCapture<Any> {
+    return LogCapture<Any>(logAppender.events()).logged(expectedLoggingMessage, times)
   }
 }

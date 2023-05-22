@@ -49,8 +49,6 @@ class LogCaptureRegisterExtensionShould {
     log.info("a message");
     log.info("a message");
 
-    logCaptureExtension.logged(aLog()
-        .info()
-        .withMessage("a message"), 2);
+    logCaptureExtension.logged(aLog().info().withMessage("a message"), 2);
   }
 }

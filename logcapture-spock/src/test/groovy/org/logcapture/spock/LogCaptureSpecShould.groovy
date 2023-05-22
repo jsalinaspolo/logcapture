@@ -5,14 +5,13 @@ import spock.lang.Shared
 
 import static ch.qos.logback.classic.Level.DEBUG
 import static ch.qos.logback.classic.Level.INFO
+import static org.hamcrest.Matchers.*
 import static org.logcapture.assertion.ExpectedLoggingMessage.aLog
-import static org.hamcrest.Matchers.allOf
-import static org.hamcrest.Matchers.equalTo
-import static org.hamcrest.Matchers.not
 
 class LogCaptureSpecShould extends LogCaptureSpec {
 
-  @Shared log = LoggerFactory.getLogger(getClass())
+  @Shared
+      log = LoggerFactory.getLogger(getClass())
 
   def "verify missing events"() {
     expect:

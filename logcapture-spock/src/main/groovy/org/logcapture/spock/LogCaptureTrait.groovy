@@ -2,11 +2,11 @@ package org.logcapture.spock
 
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.spi.ILoggingEvent
-import org.logcapture.LogCapture
-import org.logcapture.logback.StubAppender
 import org.hamcrest.Matcher
 import org.junit.After
 import org.junit.Before
+import org.logcapture.LogCapture
+import org.logcapture.logback.StubAppender
 import org.slf4j.LoggerFactory
 
 trait LogCaptureTrait {
@@ -27,13 +27,11 @@ trait LogCaptureTrait {
     root.detachAppender(logAppender)
   }
 
-  LogCaptureTrait logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
-    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage)
-    return this
+  LogCapture logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
+    return new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage)
   }
 
-  LogCaptureTrait logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage, Integer times) {
-    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage, times)
-    return this
+  LogCapture logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage, Integer times) {
+    return new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage, times)
   }
 }

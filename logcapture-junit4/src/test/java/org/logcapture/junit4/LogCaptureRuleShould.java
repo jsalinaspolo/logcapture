@@ -1,8 +1,8 @@
 package org.logcapture.junit4;
 
-import org.logcapture.assertion.VerificationException;
 import org.junit.Rule;
 import org.junit.Test;
+import org.logcapture.assertion.VerificationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -10,11 +10,9 @@ import org.slf4j.MarkerFactory;
 
 import static ch.qos.logback.classic.Level.DEBUG;
 import static ch.qos.logback.classic.Level.INFO;
-import static org.logcapture.assertion.ExpectedLoggingMessage.aLog;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
+import static org.logcapture.assertion.ExpectedLoggingMessage.aLog;
 
 public class LogCaptureRuleShould {
   private static final String LOG_NAME = "aLogNotAttachedToRoot";
@@ -87,9 +85,7 @@ public class LogCaptureRuleShould {
     log.info("a message");
     log.info("a message");
 
-    logCaptureRule.logged(aLog()
-        .info()
-        .withMessage("a message"), 2);
+    logCaptureRule.logged(aLog().info().withMessage("a message"), 2);
   }
 
   private Logger createLogger(String name) {

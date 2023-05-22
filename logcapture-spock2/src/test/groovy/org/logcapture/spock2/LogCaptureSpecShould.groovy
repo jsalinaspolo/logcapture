@@ -1,5 +1,6 @@
 package org.logcapture.spock2
 
+
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Shared
@@ -25,8 +26,7 @@ class LogCaptureSpecShould extends LogCaptureSpec {
     expect:
     log.info("first message")
     log.debug("second message")
-    logged allOf(
-        aLog().withLevel(INFO).withMessage("first message"),
+    logged allOf(aLog().withLevel(INFO).withMessage("first message"),
         aLog().withLevel(DEBUG).withMessage("second message"))
   }
 

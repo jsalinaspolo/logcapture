@@ -1,7 +1,7 @@
 package org.logcapture.kotest
 
-import org.logcapture.assertion.ExpectedLoggingMessage.aLog
 import io.kotest.core.spec.style.StringSpec
+import org.logcapture.assertion.ExpectedLoggingMessage.aLog
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 

@@ -6,12 +6,13 @@ import spock.lang.Specification
 
 import static ch.qos.logback.classic.Level.DEBUG
 import static ch.qos.logback.classic.Level.INFO
-import static org.logcapture.assertion.ExpectedLoggingMessage.aLog
 import static org.hamcrest.Matchers.*
+import static org.logcapture.assertion.ExpectedLoggingMessage.aLog
 
 class LogCaptureTraitShould extends Specification implements LogCaptureTrait {
 
-  @Shared log = LoggerFactory.getLogger(LogCaptureTraitShould.class)
+  @Shared
+      log = LoggerFactory.getLogger(LogCaptureTraitShould.class)
 
   def "verify missing events"() {
     expect:
@@ -24,10 +25,8 @@ class LogCaptureTraitShould extends Specification implements LogCaptureTrait {
     expect:
     log.info("first message")
     log.debug("second message")
-    logged(allOf(
-        aLog().withLevel(INFO).withMessage("first message"),
-        aLog().withLevel(DEBUG).withMessage("second message"))
-    )
+    logged(allOf(aLog().withLevel(INFO).withMessage("first message"),
+        aLog().withLevel(DEBUG).withMessage("second message")))
   }
 
   def "verify sync logs using rule"() {

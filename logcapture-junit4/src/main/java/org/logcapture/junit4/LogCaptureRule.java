@@ -2,14 +2,14 @@ package org.logcapture.junit4;
 
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import org.logcapture.LogCapture;
-import org.logcapture.logback.StubAppender;
 import org.hamcrest.Matcher;
 import org.junit.rules.MethodRule;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
+import org.logcapture.LogCapture;
+import org.logcapture.logback.StubAppender;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
@@ -52,13 +52,11 @@ public class LogCaptureRule implements MethodRule, TestRule {
     };
   }
 
-  public LogCaptureRule logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
-    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage);
-    return this;
+  public LogCapture logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
+    return new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage);
   }
 
-  public LogCaptureRule logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage, Integer times) {
-    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage, times);
-    return this;
+  public LogCapture logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage, Integer times) {
+    return new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage, times);
   }
 }
