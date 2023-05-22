@@ -2,13 +2,11 @@ package org.logcapture.spock
 
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.spi.ILoggingEvent
+import org.hamcrest.Matcher
 import org.logcapture.LogCapture
 import org.logcapture.logback.StubAppender
-import org.hamcrest.Matcher
 import org.slf4j.LoggerFactory
 import spock.lang.Specification
-
-import java.util.stream.Collectors
 
 import static org.slf4j.Logger.ROOT_LOGGER_NAME
 
@@ -32,7 +30,7 @@ class LogCaptureSpec extends Specification {
     return new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage)
   }
 
-  LogCapture filter(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
-    return new LogCapture<>(logAppender.events()).filter(expectedLoggingMessage)
+  LogCapture logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage, Integer times) {
+    return new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage, times)
   }
 }

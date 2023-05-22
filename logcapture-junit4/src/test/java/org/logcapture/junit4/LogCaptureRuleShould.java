@@ -2,7 +2,6 @@ package org.logcapture.junit4;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.logcapture.assertion.ExpectedLoggingMessage;
 import org.logcapture.assertion.VerificationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,12 +85,7 @@ public class LogCaptureRuleShould {
     log.info("a message");
     log.info("a message");
 
-    ExpectedLoggingMessage expectedMessage = aLog()
-            .info()
-            .withMessage("a message");
-    logCaptureRule
-            .filter(expectedMessage)
-            .logged(expectedMessage, 2);
+    logCaptureRule.logged(aLog().info().withMessage("a message"), 2);
   }
 
   private Logger createLogger(String name) {

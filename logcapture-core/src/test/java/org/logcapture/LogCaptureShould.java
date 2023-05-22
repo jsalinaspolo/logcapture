@@ -34,8 +34,7 @@ public class LogCaptureShould {
     LogCapture<ILoggingEvent> underTest = new LogCapture<>(Arrays.asList(log1, log1, log2));
 
     ExpectedLoggingMessage expectedLog = aLog().withMessage("message");
-    underTest.filter(expectedLog)
-                    .logged(expectedLog, 2);
+    underTest.logged(expectedLog, 2);
   }
 
   @Test
@@ -45,7 +44,7 @@ public class LogCaptureShould {
 
     LogCapture<ILoggingEvent> underTest = new LogCapture<>(Arrays.asList(log1, log2, log1, log2));
 
-    underTest.logged(aLog().withMessage("message"), 4);
+    underTest.logged(aLog().withMessage("message"), 2);
   }
 
   @Test

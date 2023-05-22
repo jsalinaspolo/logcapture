@@ -26,16 +26,12 @@ public class LogCapture<T> {
 
     public LogCapture<T> logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage, Integer times) {
         logged(expectedLoggingMessage);
-        if (events.size() != times) {
+      List<ILoggingEvent> matchingEvents = events.stream()
+          .filter(actual -> expectedLoggingMessage.matches(Collections.singletonList(actual)))
+          .collect(Collectors.toList());
+      if (matchingEvents.size() != times) {
             throw VerificationException.forUnmatchedTimesLog(expectedLoggingMessage, events, times, events.size());
         }
         return this;
-    }
-
-    public LogCapture<T> filter(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
-        List<ILoggingEvent> matchingEvents = events.stream()
-                .filter(actual -> expectedLoggingMessage.matches(Collections.singletonList(actual)))
-                .collect(Collectors.toList());
-        return new LogCapture<>(matchingEvents);
     }
 }

@@ -49,11 +49,6 @@ class LogCaptureRegisterExtensionShould {
     log.info("a message");
     log.info("a message");
 
-    ExpectedLoggingMessage expectedMessage = aLog()
-            .info()
-            .withMessage("a message");
-    logCaptureExtension
-            .filter(expectedMessage)
-            .logged(expectedMessage, 2);
+    logCaptureExtension.logged(aLog().info().withMessage("a message"), 2);
   }
 }

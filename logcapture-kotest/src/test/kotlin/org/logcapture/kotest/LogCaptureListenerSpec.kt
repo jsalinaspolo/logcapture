@@ -22,7 +22,6 @@ class LogCaptureListenerSpec : StringSpec({
     log.info("a message")
     log.info("a message")
 
-    val expectedMessage = aLog().info().withMessage("a message")
-    logCaptureListener.filter(expectedMessage).logged(expectedMessage, 2)
+    logCaptureListener.logged(aLog().info().withMessage("a message"), 2)
   }
 })
