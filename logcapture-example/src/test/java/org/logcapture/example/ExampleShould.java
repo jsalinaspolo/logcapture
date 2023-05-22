@@ -82,6 +82,16 @@ public class ExampleShould {
         .withMessage("a message"));
   }
 
+  @Test
+  public void verify_captured_n_logs() {
+    log.info("a message");
+    log.info("a message");
+    log.info("what");
+
+    logCaptureRule.logged(aLog().info()
+        .withMessage("a message"), 2);
+  }
+
   class ServiceThatLogs {
 
     void methodThatLogsStuff() {
