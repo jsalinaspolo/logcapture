@@ -11,7 +11,8 @@ import static org.hamcrest.Matchers.*
 
 class LogCaptureTraitShould extends Specification implements LogCaptureTrait {
 
-  @Shared log = LoggerFactory.getLogger(LogCaptureTraitShould.class)
+  @Shared
+      log = LoggerFactory.getLogger(LogCaptureTraitShould.class)
 
   def "verify missing events"() {
     expect:
@@ -24,10 +25,8 @@ class LogCaptureTraitShould extends Specification implements LogCaptureTrait {
     expect:
     log.info("first message")
     log.debug("second message")
-    logged(allOf(
-        aLog().withLevel(INFO).withMessage("first message"),
-        aLog().withLevel(DEBUG).withMessage("second message"))
-    )
+    logged(allOf(aLog().withLevel(INFO).withMessage("first message"),
+        aLog().withLevel(DEBUG).withMessage("second message")))
   }
 
   def "verify sync logs using rule"() {
@@ -42,6 +41,8 @@ class LogCaptureTraitShould extends Specification implements LogCaptureTrait {
     log.info("a message")
     log.info("a message")
 
-    logged(aLog().info().withMessage("a message"), 2)
+    def expectedLog = aLog().info().withMessage("a message")
+    filter(expectedLog)
+        .logged(expectedLog, 2)
   }
 }

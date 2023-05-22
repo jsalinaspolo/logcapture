@@ -1,7 +1,7 @@
 package org.logcapture.kotest
 
-import org.logcapture.assertion.ExpectedLoggingMessage.aLog
 import io.kotest.core.spec.style.StringSpec
+import org.logcapture.assertion.ExpectedLoggingMessage.aLog
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -22,6 +22,7 @@ class LogCaptureListenerSpec : StringSpec({
     log.info("a message")
     log.info("a message")
 
-    logCaptureListener.logged(aLog().info().withMessage("a message"), 2)
+    val expectedMessage = aLog().info().withMessage("a message")
+    logCaptureListener.filter(expectedMessage).logged(expectedMessage, 2)
   }
 })

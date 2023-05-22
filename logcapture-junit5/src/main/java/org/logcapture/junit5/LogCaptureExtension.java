@@ -2,12 +2,12 @@ package org.logcapture.junit5;
 
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import org.logcapture.LogCapture;
-import org.logcapture.logback.StubAppender;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.logcapture.LogCapture;
+import org.logcapture.logback.StubAppender;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
@@ -41,13 +41,11 @@ public class LogCaptureExtension implements BeforeEachCallback, AfterEachCallbac
     root.detachAppender(logAppender);
   }
 
-  public LogCaptureExtension logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
-    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage);
-    return this;
+  public LogCapture logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
+    return new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage);
   }
 
-  public LogCaptureExtension logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage, Integer times) {
-    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage, times);
-    return this;
+  public LogCapture filter(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
+    return new LogCapture<>(logAppender.events()).filter(expectedLoggingMessage);
   }
 }

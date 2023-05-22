@@ -26,12 +26,11 @@ class LogCaptureSpec extends Specification {
     root.detachAppender(logAppender)
   }
 
-  LogCaptureSpec logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
-    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage)
-    return this
+  LogCapture logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
+    return new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage)
   }
-  LogCaptureSpec logged(Matcher<List<ILoggingEvent>> expectedLoggingMessage, Integer times) {
-    new LogCapture<>(logAppender.events()).logged(expectedLoggingMessage, times)
-    return this
+
+  LogCapture filter(Matcher<List<ILoggingEvent>> expectedLoggingMessage) {
+    return new LogCapture<>(logAppender.events()).filter(expectedLoggingMessage)
   }
 }

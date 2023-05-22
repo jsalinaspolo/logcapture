@@ -6,6 +6,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.logcapture.assertion.ExpectedLoggingMessage;
 import org.logcapture.assertion.VerificationException;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,18 @@ public class LogCaptureShould {
     LogCapture<ILoggingEvent> underTest = new LogCapture<>(Arrays.asList(log1, log1));
 
     underTest.logged(aLog().withMessage("message"), 2);
+  }
+
+  @Test
+  public void match_n_times_filtering_others() {
+    LoggingEvent log1 = aLoggingEventWith(INFO, "message");
+    LoggingEvent log2 = aLoggingEventWith(INFO, "another");
+
+    LogCapture<ILoggingEvent> underTest = new LogCapture<>(Arrays.asList(log1, log1, log2));
+
+    ExpectedLoggingMessage expectedLog = aLog().withMessage("message");
+    underTest.filter(expectedLog)
+                    .logged(expectedLog, 2);
   }
 
   @Test

@@ -42,6 +42,9 @@ class LogCaptureSpecShould extends LogCaptureSpec {
     log.info("a message")
     log.info("a message")
 
-    logged(aLog().info().withMessage("a message"), 2)
+    def expectedLog = aLog().info().withMessage("a message")
+    filter(expectedLog)
+        .logged(expectedLog, 2)
   }
+
 }
