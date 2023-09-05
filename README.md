@@ -71,7 +71,7 @@ class LogCaptureListenerSpec : StringSpec({
 })
 ```
 
-More example how to use the library at [ExampleShould.java](https://github.com/jsalinaspolo/logcapture/blob/master/src/test/java/com/logcapture/example/ExampleShould.java) 
+More example how to use the library at [ExampleShould.java](https://github.com/jsalinaspolo/logcapture/blob/main/logcapture-example/src/test/java/org/logcapture/example/ExampleShould.java)
 
 ## Binaries
 
