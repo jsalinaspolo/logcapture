@@ -3,7 +3,7 @@ plugins {
 }
 
 ext {
-  junit5_version = "5.10.0"
+  junit5_version = "5.10.1"
 }
 
 dependencies {
