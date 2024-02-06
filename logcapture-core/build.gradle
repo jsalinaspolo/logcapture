@@ -5,7 +5,7 @@ plugins {
 dependencies {
   api "org.hamcrest:hamcrest-library:2.2"
   api "ch.qos.logback:logback-classic:1.2.11"
-  api "org.slf4j:slf4j-api:1.7.36"
+  api "org.slf4j:slf4j-api:2.0.12"
 
   testImplementation "junit:junit:4.13.2"
   testImplementation "org.assertj:assertj-core:3.25.2"
