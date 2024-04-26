@@ -31,12 +31,12 @@ subprojects {
     withSourcesJar()
   }
 
-  jacocoTestReport {
-    reports {
-      xml.enabled true
-      html.enabled true
-    }
-  }
+//  tasks.jacocoTestReport {
+//    reports {
+//      xml.enabled = true
+//      html.enabled = true
+//    }
+//  }
 
   def pomConfig = {
     name project.name
