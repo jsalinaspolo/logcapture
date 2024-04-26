@@ -34,4 +34,8 @@ public class LogCapture<T> {
         }
         return this;
     }
+
+    public List<ILoggingEvent> getEvents() {
+      return Collections.unmodifiableList(events);
+    }
 }
