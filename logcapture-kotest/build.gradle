@@ -3,7 +3,7 @@ plugins {
 }
 
 ext {
-  kotestVersion = '5.9.0'
+  kotestVersion = '5.9.1'
 }
 
 dependencies {
