@@ -7,7 +7,7 @@ ext {
 }
 
 dependencies {
-  implementation project(":logcapture-core")
+  api project(":logcapture-core")
   implementation "org.junit.jupiter:junit-jupiter-api:$junit5_version"
 
   testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit5_version"
