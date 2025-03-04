@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-  implementation project(":logcapture-core")
+  api project(":logcapture-core")
   implementation "junit:junit:4.13.2"
 
   testImplementation "org.assertj:assertj-core:3.27.3"

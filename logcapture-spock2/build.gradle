@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-  implementation project(":logcapture-core")
+  api project(":logcapture-core")
 
   implementation 'org.spockframework:spock-core:2.0-groovy-3.0'
 }
