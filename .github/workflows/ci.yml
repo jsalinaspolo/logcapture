@@ -22,4 +22,4 @@ jobs:
           dependency-graph: generate-and-submit
           add-job-summary-as-pr-comment: always
       - name: Build with Gradle
-        run: ./gradlew check jacocoTestReport
+        run: ./gradlew check jacocoTestReport --scan
