@@ -3,7 +3,7 @@
 Use username/password of sonatype https://s01.oss.sonatype.org/ 
 
 ```shell
-MAVEN_USERNAME={} MAVEN_PASSWORD={} ./gradlew build publish
+MAVEN_USERNAME={} MAVEN_PASSWORD={} ./gradlew build jar publish
 ```
 
 ## Generate gpg key
