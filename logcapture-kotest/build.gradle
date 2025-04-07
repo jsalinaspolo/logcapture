@@ -13,13 +13,6 @@ dependencies {
   implementation "io.kotest:kotest-assertions-core-jvm:$kotestVersion"
 }
 
-compileKotlin {
-  kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-  kotlinOptions.jvmTarget = "1.8"
-}
-
 test {
   useJUnitPlatform()
 }
