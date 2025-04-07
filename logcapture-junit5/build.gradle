@@ -3,16 +3,19 @@ plugins {
 }
 
 ext {
-  junit5_version = "5.11.4"
+  junit5_version = "5.12.1"
 }
 
 dependencies {
   api project(":logcapture-core")
+
   implementation "org.junit.jupiter:junit-jupiter-api:$junit5_version"
 
   testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit5_version"
   testImplementation "org.junit.jupiter:junit-jupiter-params:$junit5_version"
   testImplementation "org.junit.vintage:junit-vintage-engine:$junit5_version"
+  testImplementation "org.junit.vintage:junit-vintage-engine:$junit5_version"
+  testImplementation "org.junit.platform:junit-platform-launcher:1.12.1"
 }
 
 test {
