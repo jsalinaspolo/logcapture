@@ -6,7 +6,8 @@
 # LogCapture
 
 LogCapture is a testing library for asserting logging messages.
- 
+
+> :warning: Latest release with Java 1.8 and/or spock 1.0 support is `1.3.4` 
 ## How it works
 
 
