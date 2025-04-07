@@ -23,20 +23,14 @@ subprojects {
     }
   }
 
-  sourceCompatibility = 1.8
-  targetCompatibility = 1.8
-
   java {
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(11)
+    }
+
     withJavadocJar()
     withSourcesJar()
   }
-
-//  tasks.jacocoTestReport {
-//    reports {
-//      xml.enabled = true
-//      html.enabled = true
-//    }
-//  }
 
   def pomConfig = {
     name project.name
