@@ -292,7 +292,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void match_for_expected_marker() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    logEvent.setMarker(MarkerFactory.getMarker("A_MARKER"));
+    logEvent.addMarker(MarkerFactory.getMarker("A_MARKER"));
 
     ExpectedLoggingMessage expectedLoggingMessage = aLog()
         .withMarker(MarkerFactory.getMarker("A_MARKER"));
@@ -305,7 +305,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void match_for_expected_marker_label() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    logEvent.setMarker(MarkerFactory.getMarker("A_MARKER"));
+    logEvent.addMarker(MarkerFactory.getMarker("A_MARKER"));
 
     ExpectedLoggingMessage expectedLoggingMessage = aLog()
         .withMarker("A_MARKER");
@@ -318,7 +318,7 @@ public class ExpectedLoggingMessageShould {
   @Test
   public void no_match_for_unexpected_marker() {
     LoggingEvent logEvent = aLoggingEventWith(INFO, "message");
-    logEvent.setMarker(MarkerFactory.getMarker("A_MARKER"));
+    logEvent.addMarker(MarkerFactory.getMarker("A_MARKER"));
 
     ExpectedLoggingMessage expectedLoggingMessage = aLog()
         .withMarker("ANOTHER_MARKER");
