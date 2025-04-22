@@ -1,7 +1,11 @@
 package org.logcapture.kotest
 
+import ch.qos.logback.classic.Level
 import io.kotest.assertions.timing.eventually
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.inspectors.forOne
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
 import org.logcapture.assertion.ExpectedLoggingMessage.aLog
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -33,6 +37,15 @@ class LogCaptureListenerSpec : StringSpec({
       i += 1
       logMessageWhenCondition(log, i == 5)
       logCaptureListener.logged(aLog().info().withMessage("a message"))
+    }
+  }
+
+  "verify using kotest assertions" {
+    log.info("a message")
+
+    logCaptureListener.logged().events.forOne {
+      it.level shouldBe Level.INFO
+      it.message shouldContain "message"
     }
   }
 })
