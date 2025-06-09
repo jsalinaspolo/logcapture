@@ -5,7 +5,7 @@ plugins {
 dependencies {
   api project(":logcapture-core")
 
-  implementation(platform('org.junit:junit-bom:5.12.2'))
+  implementation(platform('org.junit:junit-bom:5.13.1'))
   implementation "org.junit.jupiter:junit-jupiter-api"
 
   testImplementation "org.junit.jupiter:junit-jupiter-engine"
