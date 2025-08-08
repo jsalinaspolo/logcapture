@@ -24,6 +24,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew check jacocoTestReport --scan
   dependabot:
+    needs: [ build ]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
