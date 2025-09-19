@@ -8,5 +8,5 @@ dependencies {
   api "org.slf4j:slf4j-api:2.0.17"
 
   testImplementation "junit:junit:4.13.2"
-  testImplementation "org.assertj:assertj-core:3.27.4"
+  testImplementation "org.assertj:assertj-core:3.27.5"
 }
