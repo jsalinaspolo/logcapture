@@ -1,0 +1,18 @@
+plugins {
+  id 'org.jetbrains.kotlin.jvm' version '2.2.20'
+}
+
+ext {
+  kotestVersion = '6.0.3'
+}
+
+dependencies {
+  api project(":logcapture-core")
+
+  implementation "io.kotest:kotest-runner-junit5-jvm:$kotestVersion"
+  implementation "io.kotest:kotest-assertions-core-jvm:$kotestVersion"
+}
+
+test {
+  useJUnitPlatform()
+}

@@ -72,6 +72,23 @@ class LogCaptureListenerSpec : StringSpec({
 })
 ```
 
+Using Kotest v6:
+
+```kotlin
+class LogCaptureListenerSpec : StringSpec({
+  val logCaptureListener = LogCaptureListener()
+  extensions(logCaptureListener)  // Add LogCaptureListener
+
+  val log: Logger = LoggerFactory.getLogger(LogCaptureListenerSpec::class.java)
+
+  "verify log messages" {
+    log.info("a message")
+
+    logCaptureListener.logged(aLog().info().withMessage("a message"))
+  }
+})
+```
+
 More example how to use the library at [ExampleShould.java](https://github.com/jsalinaspolo/logcapture/blob/main/logcapture-example/src/test/java/org/logcapture/example/ExampleShould.java)
 
 ## Binaries
@@ -89,8 +106,9 @@ add one of the test library dependency
 ```
 testImplementation 'org.logcapture:logcapture-junit4:x.y.z'
 testImplementation 'org.logcapture:logcapture-junit5:x.y.z'
-testImplementation 'org.logcapture:logcapture-spock:x.y.z'
+testImplementation 'org.logcapture:logcapture-spock2:x.y.z'
 testImplementation 'org.logcapture:logcapture-kotest:x.y.z'
+testImplementation 'org.logcapture:logcapture-kotest6:x.y.z'
 ```
 
 
