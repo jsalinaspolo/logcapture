@@ -6,5 +6,5 @@ dependencies {
   api project(":logcapture-core")
   implementation "junit:junit:4.13.2"
 
-  testImplementation "org.assertj:assertj-core:3.27.6"
+  testImplementation "org.assertj:assertj-core:3.27.7"
 }
